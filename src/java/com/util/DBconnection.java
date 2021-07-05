@@ -18,7 +18,7 @@ public class DBconnection {
             
             
             String driver = "org.apache.derby.jdbc.ClientDriver";
-            String connectionString = "jdbc:derby://localhost:1527/customers;create=true;user=app;password=app";
+            String connectionString = "jdbc:derby://localhost:1527/ProMS;create=true;user=app;password=app";
             
             Class.forName(driver);
             
