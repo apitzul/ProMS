@@ -10,5 +10,36 @@ package com.employee;
  * @author apitz
  */
 public class employeeDB {
+    private employee clsEmp;
+
+    public employeeDB() {
+    }
+
+    public employeeDB(employee clsEmp) {
+        this.clsEmp = clsEmp;
+    }
+
+    public employee getClsEmp() {
+        return clsEmp;
+    }
+
+    public void setClsEmp(employee clsEmp) {
+        this.clsEmp = clsEmp;
+    }
     
+    public void addEmp(){
+        
+    }
+    
+    public void deleteEmp(){
+        
+    }
+    
+    public void selectEmp(){
+        
+    }
+    
+    public void updateEmp(){
+        
+    }
 }
