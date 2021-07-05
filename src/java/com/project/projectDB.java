@@ -10,5 +10,38 @@ package com.project;
  * @author apitz
  */
 public class projectDB {
+    private project clsProject;
+
+    public projectDB() {
+    }
+
+    public projectDB(project clsProject) {
+        this.clsProject = clsProject;
+    }
+
+    public project getClsProject() {
+        return clsProject;
+    }
+
+    public void setClsProject(project clsProject) {
+        this.clsProject = clsProject;
+    }
+
     
+    
+    public void addProject(){
+        
+    }
+    
+    public void deleteProject(){
+        
+    }
+    
+    public void selectProject(){
+        
+    }
+    
+    public void updateProject(){
+        
+    }
 }

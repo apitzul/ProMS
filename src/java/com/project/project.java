@@ -9,7 +9,7 @@ package com.project;
  *
  * @author apitz
  */
-public class project {
+public class project implements java.io.Serializable{
     private int id;
     private String title;
     private supplier supplier;
