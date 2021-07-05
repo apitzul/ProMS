@@ -5,6 +5,8 @@
  */
 package com.security;
 
+import com.employee.employee;
+import com.employee.employeeDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -84,7 +86,10 @@ public class LoginServlet extends HttpServlet {
  
         if(userValidate.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
          {
-             request.setAttribute("user", user); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
+             employeeDB emp = new employeeDB();
+             employee Employee = new employee();
+             Employee = emp.selectEmp(user);
+             request.setAttribute("emp", Employee); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
              request.getRequestDispatcher("/home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
          }
          else

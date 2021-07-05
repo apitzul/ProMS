@@ -17,6 +17,8 @@ public class employee {
     private int age;
     private String gender;
     private int depID;
+    private String depname;
+    private String img;
 
     public employee() {
     }
@@ -86,6 +88,23 @@ public class employee {
     public void setDepID(int depID) {
         this.depID = depID;
     }
+
+    public String getDepname() {
+        return depname;
+    }
+
+    public void setDepname(String depname) {
+        this.depname = depname;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
     
     
+        
 }

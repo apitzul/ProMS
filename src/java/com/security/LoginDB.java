@@ -34,7 +34,7 @@ public class LoginDB {
          {
              con = DBconnection.createConnection(); //Fetch database connection object
              statement = con.createStatement(); //Statement is used to write queries. Read more about it.
-             resultSet = statement.executeQuery("select username,password from login"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+             resultSet = statement.executeQuery("select username,password from employee"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
  
              while(resultSet.next()) // Until next row is present otherwise it return false
              {
