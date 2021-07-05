@@ -70,7 +70,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         String user = request.getParameter("uname");
         String pass = request.getParameter("psw");
  
@@ -79,19 +78,19 @@ public class LoginServlet extends HttpServlet {
         Login.setUsername(user); //setting the username and password through the loginBean object then only you can get it in future.
         Login.setPassword(pass);
  
-        LoginDao loginDao = new LoginDao(); //creating object for LoginDao. This class contains main logic of the application.
+        LoginDB loginDB = new LoginDB(); //creating object for LoginDao. This class contains main logic of the application.
  
-        String userValidate = loginDao.authenticateUser(Login); //Calling authenticateUser function
+        String userValidate = loginDB.authenticateUser(Login); //Calling authenticateUser function
  
         if(userValidate.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
          {
-             request.setAttribute("uname", user); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
+             request.setAttribute("user", user); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
              request.getRequestDispatcher("/home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
          }
          else
          {
              request.setAttribute("errMessage", userValidate); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
-             request.getRequestDispatcher("/Login.jsp").forward(request, response);//forwarding the request
+             request.getRequestDispatcher("/login.jsp").forward(request, response);//forwarding the request
          }
     }
 

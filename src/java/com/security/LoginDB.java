@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author aidie
  */
-public class LoginDao {
+public class LoginDB {
     public String authenticateUser(login Login)
      {
          String userName = Login.getUsername(); //Assign user entered values to temporary variables.
@@ -48,7 +48,7 @@ public class LoginDao {
              }
              return "Invalid user credentials"; // Return appropriate message in case of failure
          } catch (SQLException ex) {
-             Logger.getLogger(LoginDao.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
          }
          return null;
      }

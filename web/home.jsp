@@ -24,7 +24,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
     </div>
     <div class="w3-col s8 w3-bar ">
-      <span>Welcome, <br><strong>Mike</strong></span><br>
+      <span>Welcome, <br><strong><%=request.getAttribute("user") %></strong></span><br>
       <span>Staff Id:<br><strong> 010234</strong></span><br>
       <span>Department:<strong> Maintenance</strong></span><br>
       <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
