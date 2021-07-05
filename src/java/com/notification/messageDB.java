@@ -10,5 +10,32 @@ package com.notification;
  * @author apitz
  */
 public class messageDB {
+    private message clsMessage;
+
+    public messageDB() {
+    }
+
+    public messageDB(message clsMessage) {
+        this.clsMessage = clsMessage;
+    }
+
+    public message getClsMessage() {
+        return clsMessage;
+    }
+
+    public void setClsMessage(message clsMessage) {
+        this.clsMessage = clsMessage;
+    }
     
+    public void addMessage(){
+        
+    }
+    
+    public void selectMessage(){
+        
+    }
+    
+    public void deleteMessage(){
+        
+    }
 }
