@@ -9,7 +9,7 @@ package com.security;
  *
  * @author apitz
  */
-public class login {
+public class login implements java.io.Serializable{
     
     private int empID;
     private String username;
