@@ -197,4 +197,10 @@ public class project implements java.io.Serializable{
     public void checkWarranty(){
         
     }
+
+    @Override
+    public String toString() {
+        return "project{" + "id=" + id + ", title=" + title + ", supplier=" + supplier + ", client=" + client + ", address=" + address + ", startDate=" + startDate + ", endDate=" + endDate + ", estEndDate=" + estEndDate + ", status=" + status + ", progress=" + progress + ", quotFile=" + quotFile + ", thumbnail=" + thumbnail + ", isComplete=" + isComplete + ", lateProject=" + lateProject + ", warranty=" + warranty + ", clientID=" + clientID + ", supplierID=" + supplierID + '}';
+    }
+    
 }

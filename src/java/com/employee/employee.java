@@ -123,5 +123,10 @@ public class employee {
     public void setPassword(String password) {
         this.password = password;
     }
-        
+
+    @Override
+    public String toString() {
+        return "employee{" + "id=" + id + ", name=" + name + ", phoneNum=" + phoneNum + ", email=" + email + ", age=" + age + ", gender=" + gender + ", depID=" + depID + ", username=" + username + ", password=" + password + ", img=" + img + ", depname=" + depname + '}';
+    }
+       
 }

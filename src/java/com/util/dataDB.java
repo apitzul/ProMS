@@ -27,7 +27,7 @@ public class dataDB {
         try {
             con = DBconnection.createConnection();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("Select count(*) from "+tableName);
+            resultSet = statement.executeQuery("Select count(*) AS count from "+tableName);
             resultSet.next();
             size=resultSet.getInt("count");
         } catch (SQLException e) {
