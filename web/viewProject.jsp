@@ -1,3 +1,9 @@
+<%@page import="com.project.client"%>
+<%@page import="com.project.supplier"%>
+<%@page import="com.project.project"%>
+<%@page import="com.project.projectDB"%>
+<%@page import="com.employee.employeeDB"%>
+<%@page import="com.employee.employee"%>
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
@@ -22,15 +28,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 <!-- Sidebar/menu -->
+        <% 
+            String user = request.getParameter("user");
+            employeeDB empDB = new employeeDB();
+            employee Employee = empDB.selectEmp(user);
+        %>
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container w3-row">
     <div class="w3-col s4">
-      <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+      <img src="Image/<%= Employee.getImg()%>" class="w3-circle w3-margin-right" style="width:46px">
     </div>
     <div class="w3-col s8 w3-bar ">
-      <span>Welcome, <br><strong>Mike</strong></span><br>
-      <span>Staff Id:<br><strong> 010234</strong></span><br>
-      <span>Department:<strong> Maintenance</strong></span><br>
+      <span>Welcome, <br><strong><%= Employee.getName()%></strong></span><br>
+      <span>Staff Id:<br><strong><%= Employee.getId()%></strong></span><br>
+      <span>Department:<br><strong><%= Employee.getDepname()%></strong></span><br>
       <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
     </div>
   </div>
@@ -56,13 +67,37 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
   <!-- Header -->
+  <% 
+            String id = request.getParameter("id");
+            projectDB proDB = new projectDB();
+            project Pro = proDB.selectProject(Integer.parseInt(id));
+            
+            supplier supp = (supplier) Pro.getSupplier();
+            client clie = (client) Pro.getClient();
+            
+            
+        %>
   <header class="w3-container" style="padding-top:22px">
-      <h1><b><u>Damansara Project</u></b></h1>
+      <h1><b><u><%= Pro.getTitle()%></u></b></h1>
   </header>
     <div class="w3-container">
         <p><h5><b>Progress</b></h5></p>
     <div class="w3-grey">
-      <div class="w3-container w3-center w3-padding w3-green" style="width:25%">25%</div>
+        <div class="
+             <% 
+                 if(Pro.getStatus()<= 35){
+                    %>w3-container w3-center w3-padding w3-red<%
+                 }
+                 else if(Pro.getStatus()> 35 && Pro.getStatus()<= 75){
+                    %>w3-container w3-center w3-padding w3-yellow<%
+                 }
+                 else if(Pro.getStatus()> 75 && Pro.getStatus()<= 100){
+                    %>w3-container w3-center w3-padding w3-green<%
+                 }
+                 else
+                    %>w3-container w3-center w3-padding <%
+             %>"
+             style="width:<%= Pro.getStatus()%>%"><%= Pro.getStatus()%>%</div>
     </div>
     </div>
   <div class="w3-panel">
@@ -73,42 +108,42 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <tr>
 
             <td><h5>Title:</h5></td>
-            <td><h5>Damansara Project</h5></td>
+            <td><h5><%= Pro.getTitle()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Client Name:</h5></td>
-            <td><h5>En. Mustafa Kamal</h5></td>
+            <td><h5><%= clie.getClientName()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Client Contact:</h5></td>
-            <td><h5>012-3456789</h5></td>
+            <td><h5><%= clie.getClientContact()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Supplier Name:</h5></td>
-            <td><h5>Karim Enterprise</h5></td>
+            <td><h5><%= supp.getSupName()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Supplier Contact:</h5></td>
-            <td><h5>012-3456789</h5></td>
+            <td><h5><%= supp.getSupContact()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Project Address:</h5></td>
-            <td><h5>Seksyen 30, Shah Alam</h5></td>
+            <td><h5><%= Pro.getAddress()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Start Date:</h5></td>
-            <td><h5>12/03/2021</h5></td>
+            <td><h5><%= Pro.getStartDate()%></h5></td>
           </tr>
           <tr>
 
             <td><h5>Est. End Date:</h5></td>
-            <td><h5>10/09/2021</h5></td>
+            <td><h5><%= Pro.getEstEndDate()%></h5></td>
           </tr>
           <tr>
               

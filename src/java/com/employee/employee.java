@@ -17,9 +17,12 @@ public class employee {
     private int age;
     private String gender;
     private int depID;
-    private String depname;
+    private String username;
+    private String password;
     private String img;
 
+    private String depname;
+    
     public employee() {
     }
 
@@ -104,7 +107,21 @@ public class employee {
     public void setImg(String img) {
         this.img = img;
     }
-    
-    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
         
 }

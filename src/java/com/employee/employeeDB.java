@@ -67,6 +67,7 @@ public class employeeDB {
                     emp.setId(Integer.parseInt(empid));
                     emp.setDepname(depname);
                     emp.setImg(img);
+                    emp.setUsername(userDB);
                     System.out.println(emp.toString());
                     return emp; ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                 }
