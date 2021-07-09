@@ -15,16 +15,18 @@ public class message implements java.io.Serializable{
     private String type;
     private String remarks;
     private String createDate;
+    private String dueDate;
 
     public message() {
     }
 
-    public message(int id, String title, String type, String remarks, String createDate) {
+    public message(int id, String title, String type, String remarks, String createDate,String dueDate) {
         this.id = id;
         this.title = title;
         this.type = type;
         this.remarks = remarks;
         this.createDate = createDate;
+        this.dueDate = dueDate;
     }
 
     public int getId() {
@@ -65,6 +67,14 @@ public class message implements java.io.Serializable{
 
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
     
 }

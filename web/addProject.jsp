@@ -1,3 +1,5 @@
+<%@page import="com.project.client"%>
+<%@page import="com.util.dataDB"%>
 <!DOCTYPE html>
 <html>
 
@@ -148,7 +150,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <div class="container">
         <label for="projectName"><b>Tittle </b></label>
         <input type="text" placeholder="Enter project" name="projectName" required>
+        
+        <input list="browsers" name="browser" id="browser">
 
+            <datalist id="browsers">
+              
+                <%
+                    client Client=new client();
+                    dataDB data=new dataDB();
+                    
+                for(int i=1;i<=data.getSize("client");i++){
+                    
+                }
+                %>
+                <option value="Edge">
+            </datalist>
+        
         <label for="cName"><b>Client Name</b></label>
         <input type="text" placeholder="Enter name" name="cName" required>
         
