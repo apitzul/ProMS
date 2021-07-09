@@ -68,6 +68,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
  <header class="w3-container" style="padding-top:22px">
     <h5><b><i class="fa fa-dashboard"></i> Project information :</b></h5>
   </header>
+      
+    <a href="addNewClient.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add Client</a>
+    <a href="addNewSupplier.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add Supplier</a>
     <head>
         <style> 
             form {
@@ -149,16 +152,26 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <label for="cName"><b>Client Name</b></label>
         <input type="text" placeholder="Enter name" name="cName" required>
         
-        <label for="cContact"><b>Client Contact</b></label>
-        <input type="text" placeholder="Enter contact" name="cContact" required>
         
         <label for="spName"><b>Supplier name</b></label>
         <input type="text" placeholder="Enter supplier name" name="spName" required>
         
-        <label for="adress"><b>Project Addresss</b></label>
+        <label for="adress"><b>Project Address</b></label>
         <input type="text" placeholder="Project address" name="address" required>
+        
+        <label for="adress"><b>Start Date</b></label>
+        <input type="date" placeholder="Start date" name="startDate" required>
+        
+        <label for="adress"><b>Estimated end date</b></label>
+        <input type="date" placeholder="Estimated end date" name="estEndDate" required>
+        
+        <label for="adress"><b>quatation file</b></label>
+        <input type="file" name="qFile" required>
+        
+        
 
-        <button type="submit">Add</button>
+        <button type="submit">Add project</button>
+        <button type="reset ">cancel</button>
        
         </div>
 
