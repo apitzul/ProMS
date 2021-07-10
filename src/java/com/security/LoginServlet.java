@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -89,7 +90,8 @@ public class LoginServlet extends HttpServlet {
              employeeDB emp = new employeeDB();
              employee Employee = new employee();
              Employee = emp.selectEmp(user);
-             request.setAttribute("emp", Employee); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
+             HttpSession session = request.getSession();
+             session.setAttribute("emp", Employee); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
              request.getRequestDispatcher("/home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
          }
          else

@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -75,7 +76,8 @@ public class ClientController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String user = request.getParameter("user");
+        HttpSession session = request.getSession();
+        employee Employee = (employee)session.getAttribute("emp");
         
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -111,10 +113,6 @@ public class ClientController extends HttpServlet {
             
             if(clientRegistered.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
-                employeeDB emp = new employeeDB();
-                employee Employee = new employee();
-                Employee = emp.selectEmp(user);
-                request.setAttribute("emp", Employee);//with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
                 request.getRequestDispatcher("/addProject.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
             }
             else

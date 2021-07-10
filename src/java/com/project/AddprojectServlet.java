@@ -10,12 +10,12 @@ import com.employee.employeeDB;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.sql.Blob;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -78,7 +78,8 @@ public class AddprojectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String user = request.getParameter("user");
+        HttpSession session = request.getSession();
+        employee Employee = (employee)session.getAttribute("emp");
         
         //gets values from jsp
         String title = request.getParameter("projectName");
@@ -125,10 +126,7 @@ public class AddprojectServlet extends HttpServlet {
         String addProject = ProDB.addProject(Project);
         if(addProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
-                employeeDB emp = new employeeDB();
-                employee Employee = new employee();
-                Employee = emp.selectEmp(user);
-                request.setAttribute("emp", Employee); //with setAttribute() you can define a "key" and value pair so that you can get it in future using getAttribute("key")
+                
                 request.getRequestDispatcher("/home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
             }
             else

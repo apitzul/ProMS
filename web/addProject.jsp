@@ -1,3 +1,5 @@
+<%@page import="com.employee.employeeDB"%>
+<%@page import="com.employee.employee"%>
 <%@page import="com.project.supplierDB"%>
 <%@page import="com.project.clientDB"%>
 <%@page import="java.util.ArrayList"%>
@@ -24,15 +26,17 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 <!-- Sidebar/menu -->
+        <%employee Employee = (employee)session.getAttribute("emp");
+        %>
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container w3-row">
     <div class="w3-col s4">
-      <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+      <img src="Image/<%= Employee.getImg()%>" class="w3-circle w3-margin-right" style="width:46px">
     </div>
-    <div class="w3-col s8 w3-bar">
-      <span>Add your project, <strong>here</strong></span><br>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-      <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+    <div class="w3-col s8 w3-bar ">
+      <span>Welcome, <br><strong><%= Employee.getName()%></strong></span><br>
+      <span>Staff Id:<br><strong><%= Employee.getId()%></strong></span><br>
+      <span>Department:<br><strong><%= Employee.getDepname()%></strong></span><br>
       <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
     </div>
   </div>
@@ -42,10 +46,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <div class="w3-bar-block">
    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  My Dashboard</a>
+    <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Home</a>
     <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
+    <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
+    <a href="updateTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Update Task</a>
+    <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
     <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a>
   </div>
 </nav>
@@ -216,11 +221,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </style>
         
 <div class="container">
-    <form action="home.jsp" method="POST">
+    <form action="AddprojectServlet" method="POST" enctype="multipart/form-data">
         
         <label for="projectName"><b>Tittle </b></label>
         <input type="text" placeholder="Enter project" name="projectName" required>
-        
         
         <label for="cName"><b>Select Client</b></label>
         <select class="w3-select" name="cName" id="cName">
@@ -240,10 +244,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 }
                 %>
         </select>
+        <br>
         <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormClient()">Add New Client</a>
+        <br>
         
         <label for="cName"><b>Select Supplier</b></label>
-        <select class="w3-select" name="cName" id="cName">
+        <select class="w3-select" name="sName" id="cName">
 
                 <%
                     supplierDB supplierDB=new supplierDB();
@@ -260,19 +266,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 }
                 %>
         </select>
+        <br>
         <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormSupplier()">Add New Supplier</a>
-        
+        <br>
 
         <label for="adress"><b>Project Address</b></label>
         <input type="text" placeholder="Project address" name="address" required>
         
-        <label for="adress"><b>Start Date</b></label>
+        <label for="start date"><b>Start Date</b></label>
         <input class="w3-input" type="date" placeholder="Start date" name="startDate" required><br>
         
-        <label for="adress"><b>Estimated end date</b></label>
+        <label for="est end date"><b>Estimated end date</b></label>
         <input class="w3-input" type="date" placeholder="Estimated end date" name="estEndDate" required><br>
         
-        <label for="adress"><b>Quatation file</b></label>
+        <label for="quo file"><b>Quatation file</b></label>
         <input class="w3-input" type="file" name="qFile" required>
 
         <button type="submit">Add project</button>
@@ -281,8 +288,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <label for="select"><b>Select Supplier</b></label>            
         
         <div class="form-popup" id="myForm-client">
-               <form action="AddClientServlet.jsp" class="form-container">
+               <form action="ClientController" method="post" class="form-container">
                  <h2>Add New Client</h2>
+                 
 
                  <label for="cName"><b>Client Name</b></label>
                 <input type="text" placeholder="Enter name" name="cName" required>
@@ -299,8 +307,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div> 
     
         <div class="form-popup" id="myForm-supplier">
-                   <form action="AddSupplierServlet.jsp" class="form-container">
+            <form action="SupplierController" method="post" class="form-container">
                      <h2>Add New Supplier</h2>
+                     
+                    
 
                      <label for="cName"><b>Supplier Name</b></label>
                     <input type="text" placeholder="Enter name" name="sName" required>

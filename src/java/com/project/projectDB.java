@@ -38,8 +38,6 @@ public class projectDB {
         this.clsProject = clsProject;
     }
 
-    
-    
     public String addProject(project Project){
         
         String title = Project.getTitle();
