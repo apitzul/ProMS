@@ -8,6 +8,7 @@ package com.project;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,8 +39,34 @@ public class clientDB {
     }
 
 
-    public void addClient(){
+    public String addClient(client Client){
         
+        String name = Client.getClientName();
+        String Cont = Client.getClientContact();
+        String Address = Client.getClientAddress();
+        
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        try{
+            
+            con = DBconnection.createConnection();
+            String query = "INSERT INTO CLIENT(NAME,CONTACT,ADDRESS) VALUES(?,?,?)";
+            pstmt = con.prepareStatement(query);
+      
+            pstmt.setString(1, name);
+            pstmt.setString(2, Cont);
+            pstmt.setString(3, Address);
+             
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(clientDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "Oops.. Something Happen";
     }
     
     public void deleteClient(){
@@ -78,6 +105,25 @@ public class clientDB {
                Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
             }
         return clientList;  
+    }
+    
+    public int getClientID(String Cname){
+        
+         ArrayList<client> clientList = new ArrayList<client>();
+         
+         clientList = selectClient();
+         
+         for(int i=0; i<clientList.size(); i++){
+             client temp= (client) clientList.get(i);
+             temp.toString();
+             
+             if(temp.getClientName().equals(Cname)){
+                 int id = temp.getClientID();
+                 return id;
+             }
+         }
+         
+         return 0;
     }
     
     public void updateClient(){

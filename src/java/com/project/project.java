@@ -5,6 +5,9 @@
  */
 package com.project;
 
+import java.sql.Blob;
+
+
 /**
  *
  * @author apitz

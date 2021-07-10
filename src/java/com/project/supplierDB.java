@@ -8,6 +8,7 @@ package com.project;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,8 +38,33 @@ public class supplierDB {
         this.clsSupplier = clsSupplier;
     }
 
-    public void addSupplier(){
+    public String addSupplier(supplier Supplier){
+        String name = Supplier.getSupName();
+        String Cont = Supplier.getSupContact();
+        String Address = Supplier.getSupAddress();
         
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        try{
+            
+            con = DBconnection.createConnection();
+            String query = "INSERT INTO SUPPLIER(NAME,CONTACT,ADDRESS) VALUES(?,?,?)";
+            pstmt = con.prepareStatement(query);
+      
+            pstmt.setString(1, name);
+            pstmt.setString(2, Cont);
+            pstmt.setString(3, Address);
+             
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(supplierDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "Oops.. Something Happen";
     }
     
     public void deleteSupplier(){
@@ -78,6 +104,26 @@ public class supplierDB {
             }
         return supplierList;   
     }
+    
+    public int getSuppID(String Sname){
+        
+        ArrayList<supplier> supplierList = new ArrayList<supplier>();
+         
+        supplierList = selectSupplier();
+         
+        for(int i=0; i<supplierList.size(); i++){
+            supplier temp= (supplier) supplierList.get(i);
+            temp.toString();
+             
+            if(temp.getSupName().equals(Sname)){
+                int id = temp.getSupID();
+                return id;
+            }
+        }
+         
+        return 0;
+    }
+    
     
     public void updateSupplier(){
         

@@ -7,7 +7,9 @@ package com.project;
 
 import com.security.LoginDB;
 import com.util.DBconnection;
+import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,7 +40,44 @@ public class projectDB {
 
     
     
-    public void addProject(){
+    public String addProject(project Project){
+        
+        String title = Project.getTitle();
+        String Address = Project.getAddress();
+        String stDate = Project.getStartDate();
+        String estEndDate = Project.getEstEndDate();
+        int clieID = Project.getClientID();
+        int SupID = Project.getSupplierID();
+        String img = Project.getQuotFile();
+        int status = Project.getStatus();
+        
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        try
+         {
+            con = DBconnection.createConnection(); //Fetch database connection object
+            String query = "INSERT INTO PROJECT(TITLE,ADDRESS,STARTDATE,ESTENDDATE,CLIENTID,SUPPLIERID,QUOFILE,STATUS) VALUES(?,?,?,?,?,?,?,?)";
+            pstmt = con.prepareStatement(query);
+            
+            pstmt.setString(1, title);
+            pstmt.setString(2, Address);
+            pstmt.setString(3, stDate);
+            pstmt.setString(4, estEndDate);
+            pstmt.setInt(5, clieID);
+            pstmt.setInt(6, SupID);
+            pstmt.setString(7, img);
+            pstmt.setInt(8, status);
+            
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(projectDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "oops";
         
     }
     
