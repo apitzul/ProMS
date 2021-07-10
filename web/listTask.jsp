@@ -15,54 +15,32 @@
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 * {box-sizing: border-box;}
 
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
+.button1 {
+  background-color: #6082B6;
+  color: white;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-input[type=radio]{
-    margin-left: 10px;
+.button1:hover {
+  background-color: #6495ED;
 }
 
-input[type=file] {
+.button2 {
   background-color: #04AA6D;
   color: white;
-  padding: 12px 20px;
+  padding: 7px 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 16px;
   cursor: pointer;
+  text-decoration: none;
 }
 
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
+.button2:hover {
   background-color: #45a049;
-}
-
-input[type=reset] {
-  background-color: #CD5C5C;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=reset]:hover {
-  background-color: #B22222;
 }
 </style>
 <head>
@@ -105,8 +83,8 @@ input[type=reset]:hover {
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My Dashboard</a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
     <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
-    <a href="updateTask.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i> Add Task</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
+    <a href="updateTask.jsp" class="w3-bar-item w3-button w3-padding "><i class="fa fa-users fa-fw"></i> Add Task</a>
+    <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Task List</a>
     
   </div>
 </nav>
@@ -130,7 +108,7 @@ input[type=reset]:hover {
             
         %>
   <header class="w3-container" style="padding-top:22px">
-      <h1><b>Update Task</b></h1>
+      <h1><b>Task List</b></h1>
   </header>
     <div class="w3-container">
     <div class="w3-grey">
@@ -140,47 +118,48 @@ input[type=reset]:hover {
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
         <table class="w3-table w3-striped w3-white">
-        <form name="form" action="taskList.jsp" method="post">
           <tr>
-              <td><h5><b>Task Type:</b></h5>
-              <input type="text" name="taskType" placeholder="Enter task type"/></td>
+              <td><b>Task Name</b></td>
+              <td><b>Due Date</b></td>
+              <td><b>View project</b></td>
+              <td><b>Update Task</b></td>
           </tr>
           <tr>
-              <td><h5><b>Status:</b></h5>
-                <input type="radio" id="complete" name="status" value="Complete">
-                <label for="complete">Complete</label>
-                <input type="radio" id="pending" name="status" value="Pending">
-                <label for="pending">Pending</label>
-            </td>
+            <td>Task1</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
           <tr>
-              <td><h5><b>Department:</b></h5>
-                <input type="radio" id="admin" name="department" value="Administration">
-                <label for="admin">Administration </label>
-                <input type="radio" id="mainten" name="department" value="Maintenance">
-                <label for="mainten">Maintenance</label>
-                <input type="radio" id="sale" name="department" value="Sale">
-                <label for="sale">Sale</label>
-                <input type="radio" id="financ" name="department" value="Financial">
-                <label for="financ">Financial</label></td>
+            <td>Task2</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
           <tr>
-              <td><h5><b>Title:</b></h5>
-              <input type="text" name="taskTitle" placeholder="Enter task title"/>
-              <input type="file" name="uploadFile" id="uploadFile"></td>
+            <td>Task3</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
           <tr>
-              <td><h5><b>Remarks:</b></h5>
-              <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="height:200px"></textarea>
-              </td>
+            <td>Task5</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
           <tr>
-            <td><input type="submit" value="Save Update"></input>
-                <input type="reset" value="Cancel Update"></input></td>
+            <td>Task5</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
           <tr>
+            <td>Task5</td>
+            <td>12/03/2021</td>
+            <td><a href="#" class="button1">View Project</a></td>
+            <td><a href="#" class="button2">Update Task</a></td>
           </tr>
-        </form>
         </table>
       </div>
     </div>

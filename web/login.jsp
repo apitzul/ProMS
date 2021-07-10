@@ -8,10 +8,14 @@ and open the template in the editor.
 <html>
     <head>
         <style> 
+            
             form {
                 border: 3px solid #f1f1f1;
+                margin-right: 25%;
+                margin-left: 25%;
+                margin-top: 5%;
             }
-
+            
             /* Full-width inputs */
             input[type=text], input[type=password] {
                 width: 100%;
@@ -84,7 +88,7 @@ and open the template in the editor.
     </head>
     
     <body>
-        <form action="LoginServlet" method="post">
+        <form action="LoginServlet" method="post" >
         <div class="imgcontainer">
         <img src="img_avatar2.png" alt="LogoCompany" class="avatar">
         </div>
