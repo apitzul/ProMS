@@ -1,4 +1,7 @@
-<%@page import="com.project.client"%>
+<%@page import="com.project.supplierDB"%>
+<%@page import="com.project.clientDB"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.project.*"%>
 <%@page import="com.util.dataDB"%>
 <!DOCTYPE html>
 <html>
@@ -70,9 +73,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
  <header class="w3-container" style="padding-top:22px">
     <h5><b><i class="fa fa-dashboard"></i> Project information :</b></h5>
   </header>
-      
-    <a href="addNewClient.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add Client</a>
-    <a href="addNewSupplier.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add Supplier</a>
+     
+    
     <head>
         <style> 
             form {
@@ -145,50 +147,174 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 width: 100%;
             }
             }
+            *{box-sizing: border-box;}
+
+            /* Button used to open the contact form - fixed at the bottom of the page */
+            .open-button {
+              background-color: #555;
+              color: white;
+              padding: 16px 20px;
+              border: none;
+              cursor: pointer;
+              opacity: 0.8;
+              width: 280px;
+            }
+
+            /* The popup form - hidden by default */
+            .form-popup {
+              display: none;
+              position: fixed;
+              bottom: 0;
+              right: 15px;
+              border: 3px solid #f1f1f1;
+              z-index: 9;
+            }
+
+            /* Add styles to the form container */
+            .form-container {
+              max-width: 300px;
+              padding: 10px;
+              background-color: white;
+            }
+
+            /* Full-width input fields */
+            .form-container input[type=text], .form-container input[type=password] {
+              width: 100%;
+              padding: 15px;
+              margin: 5px 0 22px 0;
+              border: none;
+              background: #f1f1f1;
+            }
+
+            /* When the inputs get focus, do something */
+            .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+              background-color: #ddd;
+              outline: none;
+            }
+
+            /* Set a style for the submit/login button */
+            .form-container .btn {
+              background-color: #04AA6D;
+              color: white;
+              padding: 16px 20px;
+              border: none;
+              cursor: pointer;
+              width: 100%;
+              margin-bottom:10px;
+              opacity: 0.8;
+            }
+
+            /* Add a red background color to the cancel button */
+            .form-container .cancel {
+              background-color: red;
+            }
+
+            /* Add some hover effects to buttons */
+            .form-container .btn:hover, .open-button:hover {
+              opacity: 1;
+            } 
         </style>
         
 <div class="container">
+    <form action="home.jsp" method="POST">
+        
         <label for="projectName"><b>Tittle </b></label>
         <input type="text" placeholder="Enter project" name="projectName" required>
         
-        <input list="browsers" name="browser" id="browser">
+        
+        <label for="cName"><b>Select Client</b></label>
+        <select class="w3-select" name="cName" id="cName">
 
-            <datalist id="browsers">
-              
                 <%
-                    client Client=new client();
-                    dataDB data=new dataDB();
-                    
-                for(int i=1;i<=data.getSize("client");i++){
-                    
+                    clientDB clientDB=new clientDB();
+                    ArrayList<client> clientList = (ArrayList<client>)clientDB.selectClient();
+
+                for(int i=0;i<clientList.size();i++){
+
+                client temp= (client) clientList.get(i);
+                temp.toString();
+                %>
+
+                    <option value="<%=temp.getClientName()%>"><%=temp.getClientName()%></option>
+                    <%
                 }
                 %>
-                <option value="Edge">
-            </datalist>
+        </select>
+        <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormClient()">Add New Client</a>
         
-        <label for="cName"><b>Client Name</b></label>
-        <input type="text" placeholder="Enter name" name="cName" required>
+        <label for="cName"><b>Select Supplier</b></label>
+        <select class="w3-select" name="cName" id="cName">
+
+                <%
+                    supplierDB supplierDB=new supplierDB();
+                    ArrayList<supplier> supplierList = (ArrayList<supplier>) supplierDB.selectSupplier();
+
+                for(int i=0;i<supplierList.size();i++){
+
+                supplier temp= (supplier) supplierList.get(i);
+                temp.toString();
+                %>
+
+                    <option value="<%=temp.getSupName()%>"><%=temp.getSupName()%></option>
+                    <%
+                }
+                %>
+        </select>
+        <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormSupplier()">Add New Supplier</a>
         
-        
-        <label for="spName"><b>Supplier name</b></label>
-        <input type="text" placeholder="Enter supplier name" name="spName" required>
-        
+
         <label for="adress"><b>Project Address</b></label>
         <input type="text" placeholder="Project address" name="address" required>
         
         <label for="adress"><b>Start Date</b></label>
-        <input type="date" placeholder="Start date" name="startDate" required>
+        <input class="w3-input" type="date" placeholder="Start date" name="startDate" required><br>
         
         <label for="adress"><b>Estimated end date</b></label>
-        <input type="date" placeholder="Estimated end date" name="estEndDate" required>
+        <input class="w3-input" type="date" placeholder="Estimated end date" name="estEndDate" required><br>
         
-        <label for="adress"><b>quatation file</b></label>
-        <input type="file" name="qFile" required>
-        
-        
+        <label for="adress"><b>Quatation file</b></label>
+        <input class="w3-input" type="file" name="qFile" required>
 
         <button type="submit">Add project</button>
         <button type="reset ">cancel</button>
+    </form>
+    <label for="select"><b>Select Supplier</b></label>            
+        
+        <div class="form-popup" id="myForm-client">
+               <form action="AddClientServlet.jsp" class="form-container">
+                 <h2>Add New Client</h2>
+
+                 <label for="cName"><b>Client Name</b></label>
+                <input type="text" placeholder="Enter name" name="cName" required>
+
+                <label for="cContact"><b>Client Contact</b></label>
+                <input type="text" placeholder="Enter contact" name="cContact" required>
+
+                <label for="adress"><b>Client Address</b></label>
+                <input type="text" placeholder="Enter address" name="cAddress" required>
+
+                 <button type="submit" class="btn">Add New Client</button>
+                 <button type="submit" class="btn cancel" onclick="closeFormClient()">Close</button>
+               </form>
+        </div> 
+    
+        <div class="form-popup" id="myForm-supplier">
+                   <form action="AddSupplierServlet.jsp" class="form-container">
+                     <h2>Add New Supplier</h2>
+
+                     <label for="cName"><b>Supplier Name</b></label>
+                    <input type="text" placeholder="Enter name" name="sName" required>
+
+                    <label for="cContact"><b>Supplier Contact</b></label>
+                    <input type="text" placeholder="Enter contact" name="sContact" required>
+
+                    <label for="adress"><b>Supplier Address</b></label>
+                    <input type="text" placeholder="Enter address" name="sAddress" required>
+
+                     <button type="submit" class="btn">Add New Supplier</button>
+                     <button type="submit" class="btn cancel" onclick="closeFormSupplier()">Close</button>
+                   </form>
+            </div> 
        
         </div>
 
@@ -208,6 +334,8 @@ var mySidebar = document.getElementById("mySidebar");
 // Get the DIV with overlay effect
 var overlayBg = document.getElementById("myOverlay");
 
+
+
 // Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() {
   if (mySidebar.style.display === 'block') {
@@ -218,11 +346,32 @@ function w3_open() {
     overlayBg.style.display = "block";
   }
 }
+function close_exist() {
+     exist_old.style.display = "none";
 
+}
 // Close the sidebar with the close button
 function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
+}
+
+function openFormClient() {
+  document.getElementById("myForm-supplier").style.display = "none";
+  document.getElementById("myForm-client").style.display = "block";
+}
+
+function closeFormClient() {
+  document.getElementById("myForm-client").style.display = "none";
+} 
+
+function openFormSupplier() {
+  document.getElementById("myForm-client").style.display = "none";
+  document.getElementById("myForm-supplier").style.display = "block";
+}
+
+function closeFormSupplier() {
+  document.getElementById("myForm-supplier").style.display = "none";
 }
 </script>
 

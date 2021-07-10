@@ -59,19 +59,19 @@ public class clientDB {
              {  
                  client client=new client();
              
-                String clientname = resultSet.getString("clientname");//fetch the values present in database
-                String clientid = resultSet.getString("clientid"); 
-                String contact = resultSet.getString("depname");
+                String clientname = resultSet.getString("name");//fetch the values present in database
+                String clientid = resultSet.getString("id"); 
+                String contact = resultSet.getString("contact");
                 String address = resultSet.getString("address"); 
 
-                //client.setClientID();
+                client.setClientID(Integer.parseInt(clientid));
                 client.setClientName(clientname);
                 client.setClientContact(contact);
                 client.setClientAddress(address);
                 System.out.println(client.toString());
                  ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                 clientList.add(client);
-                
+                client.toString();
             }
             return clientList;
             } catch (SQLException ex) {

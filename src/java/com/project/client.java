@@ -56,6 +56,11 @@ public class client implements java.io.Serializable{
     public void setClientAddress(String clientAddress) {
         this.clientAddress = clientAddress;
     }
+
+    @Override
+    public String toString() {
+        return "client{" + "clientID=" + clientID + ", clientName=" + clientName + ", clientContact=" + clientContact + ", clientAddress=" + clientAddress + '}';
+    }
     
     
 }
