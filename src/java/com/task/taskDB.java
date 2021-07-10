@@ -5,10 +5,10 @@
  */
 package com.task;
 
-import com.employee.employee;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,8 +38,8 @@ public class taskDB {
         this.clsTask = clsTask;
     }
     
-    public ArrayList<task> selectTask(String projId){
-        task task = new task();
+    public ArrayList<task> selectTaskProject(String projId){
+        
         ArrayList<task> taskList=new ArrayList<task>();
         try
          {
@@ -49,28 +49,25 @@ public class taskDB {
  
              while(resultSet.next()) // Until next row is present otherwise it return false
              {
+                task task = new task();
                 String id= resultSet.getString("id");
-                String type= resultSet.getString("type");
-                String status= resultSet.getString("status");
-                String department= resultSet.getString("department");
-                String title= resultSet.getString("title");
+                String type= resultSet.getString("typeid");
+                String department= resultSet.getString("depaid");
                 String file= resultSet.getString("file");
                 String remarks= resultSet.getString("remarks");
                 String startDate= resultSet.getString("startDate");
                 String dueDate= resultSet.getString("dueDate");
                 String completedDate= resultSet.getString("completedDate");
                 String isComplete= resultSet.getString("isComplete");
-                String lateTask= resultSet.getString("lastTask");
+                String lateTask= resultSet.getString("lateTask");
                 String projectID= resultSet.getString("projectId");
-                String empID= resultSet.getString("empId");
                 
 
                 if(projId.equals(projectID))
                 {
                     task.setCompletedDate(completedDate);
-                    task.setDepartment(department);
+                    task.setDepid(Integer.parseInt(department));
                     task.setDueDate(dueDate);
-                    task.setEmpID(Integer.parseInt(empID));
                     task.setFile(file);
                     task.setId(Integer.parseInt(id));
                     task.setIsComplete(Boolean.parseBoolean(isComplete));
@@ -78,9 +75,7 @@ public class taskDB {
                     task.setProjectID(Integer.parseInt(projectID));
                     task.setRemarks(remarks);
                     task.setStartDate(startDate);
-                    task.setTitle(title);
-                    task.setStatus(status);
-                    task.setType(type);
+                    task.setType(Integer.parseInt(type));
 
                     System.out.println(task.toString());
                     
@@ -97,12 +92,124 @@ public class taskDB {
         return taskList;
     }
     
+    public ArrayList<task> selectTaskDepartment(int DepID){
+       
+        ArrayList<task> taskList=new ArrayList<task>();
+        try
+         {
+             Connection con = DBconnection.createConnection(); //Fetch database connection object
+             Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
+             ResultSet resultSet = statement.executeQuery("select * from task"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+ 
+             while(resultSet.next()) // Until next row is present otherwise it return false
+             {  task Task = new task();
+             
+                String id= resultSet.getString("id");
+                String type= resultSet.getString("typeid");
+                String department= resultSet.getString("depaid");
+                String file= resultSet.getString("file");
+                String remarks= resultSet.getString("remarks");
+                String startDate= resultSet.getString("startDate");
+                String dueDate= resultSet.getString("dueDate");
+                String completedDate= resultSet.getString("completedDate");
+                String isComplete= resultSet.getString("isComplete");
+                String lateTask= resultSet.getString("lateTask");
+                String projectID= resultSet.getString("projectId");
+                
+
+                if(DepID == (Integer.parseInt(department)))
+                {
+                    Task.setCompletedDate(completedDate);
+                    Task.setDepid(Integer.parseInt(department));
+                    Task.setDueDate(dueDate);
+                    Task.setFile(file);
+                    Task.setId(Integer.parseInt(id));
+                    Task.setIsComplete(Boolean.parseBoolean(isComplete));
+                    Task.setLateTask(Boolean.parseBoolean(lateTask));
+                    Task.setProjectID(Integer.parseInt(projectID));
+                    Task.setRemarks(remarks);
+                    Task.setStartDate(startDate);
+                    Task.setType(Integer.parseInt(type));
+
+                    System.out.println(Task.toString());
+                    
+                    taskList.add(Task);
+                    ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
+                }
+                
+            }
+            return taskList;
+            } catch (SQLException ex) {
+               Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        return taskList;
+    }
+    
     public void deleteTask(){
         
     }
     
-    public void addTask(){
+    public String addTask(task Task){
+       
+        int type = Task.getType();
+        String stDate = Task.getStartDate();
+        String DueDate = Task.getDueDate();
+        boolean IsComp = Task.isIsComplete();
+        boolean lateTask = Task.isLateTask();
+        int DepID = Task.getDepid();
+        int ProID = Task.getProjectID();
+        String remarks = Task.getRemarks();
         
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        
+        try
+         {
+            con = DBconnection.createConnection(); //Fetch database connection object
+            String query = "INSERT INTO TASK(TYPEID,STARTDATE,DUEDATE,ISCOMPLETE,LATETASK,DEPAID,PROJECTID,REMARKS) VALUES(?,?,?,?,?,?,?,?)";
+            pstmt = con.prepareStatement(query);
+            
+            pstmt.setInt(1, type);
+            pstmt.setString(2, stDate);
+            pstmt.setString(3, DueDate);
+            pstmt.setBoolean(4, IsComp);
+            pstmt.setBoolean(5, lateTask);
+            pstmt.setInt(6, DepID);
+            pstmt.setInt(7, ProID);
+            pstmt.setString(8, remarks);
+            
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(taskDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "Oops...";
+    }
+    
+    public String getTaskName(int TTid){
+        
+        try
+         {
+             Connection con = DBconnection.createConnection(); //Fetch database connection object
+             Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
+             ResultSet resultSet = statement.executeQuery("select name from tasktype where id ="+ TTid); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+ 
+             while(resultSet.next()) // get the last project id
+             {
+                String name = resultSet.getString("name");
+                
+                return name;
+            }
+            } catch (SQLException ex) {
+               Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return null;
     }
     
     public void updateTask(){

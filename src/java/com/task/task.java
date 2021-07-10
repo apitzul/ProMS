@@ -11,9 +11,9 @@ package com.task;
  */
 public class task implements java.io.Serializable{
     private int id;
-    private String type;
+    private int type;
     private String status;
-    private String department;
+    private int depid;
     private String title;
     private String file;
     private String remarks;
@@ -28,11 +28,11 @@ public class task implements java.io.Serializable{
     public task() {
     }
 
-    public task(int id, String type, String status, String department, String title, String file, String remarks, String startDate, String dueDate, String completedDate, boolean isComplete, boolean lateTask, int projectID, int empID) {
+    public task(int id, int type, String status, int department, String title, String file, String remarks, String startDate, String dueDate, String completedDate, boolean isComplete, boolean lateTask, int projectID, int empID) {
         this.id = id;
         this.type = type;
         this.status = status;
-        this.department = department;
+        this.depid = depid;
         this.title = title;
         this.file = file;
         this.remarks = remarks;
@@ -53,11 +53,11 @@ public class task implements java.io.Serializable{
         this.id = id;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -69,12 +69,12 @@ public class task implements java.io.Serializable{
         this.status = status;
     }
 
-    public String getDepartment() {
-        return department;
+    public int getDepid() {
+        return depid;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setDepid(int depid) {
+        this.depid = depid;
     }
 
     public String getTitle() {
@@ -160,4 +160,10 @@ public class task implements java.io.Serializable{
     public void checkDue(){
         return;
     }
+
+    @Override
+    public String toString() {
+        return "task{" + "id=" + id + ", type=" + type + ", status=" + status + ", depid=" + depid + ", title=" + title + ", file=" + file + ", remarks=" + remarks + ", startDate=" + startDate + ", dueDate=" + dueDate + ", completedDate=" + completedDate + ", isComplete=" + isComplete + ", lateTask=" + lateTask + ", projectID=" + projectID + ", empID=" + empID + '}';
+    }
+    
 }

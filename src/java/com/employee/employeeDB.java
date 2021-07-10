@@ -51,7 +51,7 @@ public class employeeDB {
          {
              Connection con = DBconnection.createConnection(); //Fetch database connection object
              Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
-             ResultSet resultSet = statement.executeQuery("select employee.USERNAME, employee.EMPNAME, employee.\"empID\", employee.image, department.depname from employee INNER JOIN department ON employee.depid = department.depid"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+             ResultSet resultSet = statement.executeQuery("select employee.USERNAME, employee.EMPNAME, employee.\"empID\", employee.image, employee.depID, department.depname from employee INNER JOIN department ON employee.depid = department.depid"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
  
              while(resultSet.next()) // Until next row is present otherwise it return false
              {
@@ -60,6 +60,7 @@ public class employeeDB {
                 String depname = resultSet.getString("depname");
                 String userDB = resultSet.getString("username"); 
                 String img = resultSet.getString("image");
+                String depid = resultSet.getString("depid");
 
                 if(user.equals(userDB))
                 {
@@ -68,6 +69,7 @@ public class employeeDB {
                     emp.setDepname(depname);
                     emp.setImg(img);
                     emp.setUsername(userDB);
+                    emp.setDepID(Integer.parseInt(depid));
                     System.out.println(emp.toString());
                     return emp; ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                 }

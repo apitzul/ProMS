@@ -7,6 +7,8 @@ package com.project;
 
 import com.employee.employee;
 import com.employee.employeeDB;
+import com.task.task;
+import com.task.taskDB;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -78,6 +80,12 @@ public class AddprojectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        //declare each DAO 
+        clientDB ClientDB = new clientDB();
+        supplierDB SuppDB = new supplierDB();
+        projectDB ProDB = new projectDB();
+        taskDB TaskDB = new taskDB();
+        
         HttpSession session = request.getSession();
         employee Employee = (employee)session.getAttribute("emp");
         
@@ -89,6 +97,8 @@ public class AddprojectServlet extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String EstEndDate = request.getParameter("estEndDate");
         
+        int clieID = ClientDB.getClientID(client);
+        int SupID = SuppDB.getSuppID(supplier);
         InputStream inputStream = null; // input stream of the upload file
         
         // obtains the upload file part in this multipart request
@@ -105,11 +115,9 @@ public class AddprojectServlet extends HttpServlet {
         }
         String image = filePart.getSubmittedFileName();
         
-        clientDB ClientDB = new clientDB();
-        supplierDB SuppDB = new supplierDB();
+        //declare java class
         project Project = new project();
-        int clieID = ClientDB.getClientID(client);
-        int SupID = SuppDB.getSuppID(supplier);
+        task Task = new task();
         
         //setting the variable into java class
         Project.setTitle(title);
@@ -120,11 +128,22 @@ public class AddprojectServlet extends HttpServlet {
         Project.setSupplierID(SupID);
         Project.setQuotFile(image);
         Project.setStatus(0);
-        
-        projectDB ProDB = new projectDB();
-        
         String addProject = ProDB.addProject(Project);
-        if(addProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+        
+        
+        int ID = ProDB.selectLatestProj();
+        Task.setType(1);
+        Task.setStartDate(java.time.LocalDate.now().toString());
+        Task.setDueDate(java.time.LocalDate.now().plusDays(5).toString());
+        Task.setIsComplete(false);
+        Task.setLateTask(false);
+        Task.setDepid(4);
+        Task.setProjectID(ID);
+        Task.setRemarks(" ");
+        
+        String addTask = TaskDB.addTask(Task); 
+        
+        if(addTask.equals("SUCCESS") && addProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
                 
                 request.getRequestDispatcher("/home.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.

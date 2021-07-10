@@ -1,3 +1,6 @@
+<%@page import="com.task.taskDB"%>
+<%@page import="com.task.task"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.project.client"%>
 <%@page import="com.project.supplier"%>
 <%@page import="com.project.project"%>
@@ -94,16 +97,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
   <!-- Header -->
-  <% 
-            String id = request.getParameter("id");
-            projectDB proDB = new projectDB();
-            project Pro = proDB.selectProject(Integer.parseInt(id));
-            
-            supplier supp = (supplier) Pro.getSupplier();
-            client clie = (client) Pro.getClient();
-            
-            
-        %>
+  <%
+      ArrayList<task> taskList = new ArrayList<task>();
+      taskDB TaskDB = new taskDB();
+      taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
+  %>
   <header class="w3-container" style="padding-top:22px">
       <h1><b>Task List</b></h1>
   </header>
@@ -116,47 +114,29 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div class="w3-twothird">
         <table class="w3-table w3-striped w3-white">
           <tr>
-              <td><b>Task Name</b></td>
-              <td><b>Due Date</b></td>
-              <td><b>View project</b></td>
-              <td><b>Update Task</b></td>
+              <th><b>Task Name</b></th>
+              <th><b>Due Date</b></th>
+              <th><b>View project</b></th>
+              <th><b>Update Task</b></th>
           </tr>
-          <tr>
-            <td>Task1</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
-          <tr>
-            <td>Task2</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
-          <tr>
-            <td>Task3</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
-          <tr>
-            <td>Task5</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
-          <tr>
-            <td>Task5</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
-          <tr>
-            <td>Task5</td>
-            <td>12/03/2021</td>
-            <td><a href="#" class="button1">View Project</a></td>
-            <td><a href="#" class="button2">Update Task</a></td>
-          </tr>
+          <%
+              int i = 0;
+          while(i<taskList.size()){
+
+                task temp= (task) taskList.get(i);
+                String name = TaskDB.getTaskName(temp.getType());
+                int projId = temp.getProjectID();
+                int TaskId = temp.getId();
+                %>
+                    <tr>
+                        <td><%=name%></td>
+                        <td><%=temp.getDueDate()%></td>
+                        <td><a href="viewProject.jsp?id=<%=projId%>" class="button1">View Project</a></td>
+                        <td><a href="updateTask.jsp?id=<%=TaskId%>" class="button2">Update Task</a></td>
+                     </tr>
+                    <%
+                i++;}
+                %>
         </table>
       </div>
     </div>

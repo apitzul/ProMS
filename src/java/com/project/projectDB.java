@@ -7,7 +7,6 @@ package com.project;
 
 import com.security.LoginDB;
 import com.util.DBconnection;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,6 +135,26 @@ public class projectDB {
         
         return pro;
         
+    }
+    
+    public int selectLatestProj(){
+        
+        try
+         {
+             Connection con = DBconnection.createConnection(); //Fetch database connection object
+             Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
+             ResultSet resultSet = statement.executeQuery("select MAX(\"proID\") AS proID from project"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+ 
+             while(resultSet.next()) // get the last project id
+             {
+                String proID = resultSet.getString("proID");
+                System.out.print("ID last" + proID);
+                return Integer.parseInt(proID);
+            }
+            } catch (SQLException ex) {
+               Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return 0;
     }
     
     public void updateProject(){

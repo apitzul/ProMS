@@ -1,3 +1,7 @@
+<%@page import="com.employee.departmentDB"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.task.taskDB"%>
+<%@page import="com.task.task"%>
 <%@page import="com.project.client"%>
 <%@page import="com.project.supplier"%>
 <%@page import="com.project.project"%>
@@ -69,7 +73,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             String id = request.getParameter("id");
             projectDB proDB = new projectDB();
             project Pro = proDB.selectProject(Integer.parseInt(id));
-            
             supplier supp = (supplier) Pro.getSupplier();
             client clie = (client) Pro.getClient();
             
@@ -150,51 +153,45 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </div>
 
       <div class="w3-twothird">
+            <%
+                ArrayList<task> taskList = new ArrayList<task>();
+                taskDB TaskDB = new taskDB();
+                taskList = TaskDB.selectTaskProject(id);
+            %>
           <h5><b>Progress Log</b></h5>
         <table class="w3-table w3-striped w3-white">
           <tr>
-              <td><b>Date</b></td>
-              <td><b>Department</b></td>
-              <td><b>Title</b></td>
-              <td><b>Status</b></td>
-              <td><b>Remarks</b></td>
+              <th><b>Date</b></th>
+              <th><b>Department</b></th>
+              <th><b>Title</b></th>
+              <th><b>Status</b></th>
+              <th><b>Remarks</b></th>
           </tr>
-          <tr>
-            <td>12/03/2021</td>
-            <td>Account</td>
-            <td>Damansara Project</td>
-            <td>Ongoing</td>
-            <td>Prepare PO</td>
-          </tr>
-          <tr>
-            <td>12/03/2021</td>
-            <td>Account</td>
-            <td>Damansara Project</td>
-            <td>Ongoing</td>
-            <td>Prepare PO</td>
-          </tr>
-          <tr>
-            <td>12/03/2021</td>
-            <td>Account</td>
-            <td>Damansara Project</td>
-            <td>Ongoing</td>
-            <td>Prepare PO</td>
-          </tr>
-          <tr>
-            <td>12/03/2021</td>
-            <td>Account</td>
-            <td>Damansara Project</td>
-            <td>Ongoing</td>
-            <td>Prepare PO</td>
-          </tr>
-          <tr>
-            <td>12/03/2021</td>
-            <td>Account</td>
-            <td>Damansara Project</td>
-            <td>Ongoing</td>
-            <td>Prepare PO</td>
-          </tr>
-          </tr>
+           <%
+               departmentDB DepDB = new departmentDB();
+              int i = 0;
+          while(i<taskList.size()){
+
+                task temp= (task) taskList.get(i);
+                String depname = DepDB.getDepName(temp.getDepid());
+                String taskname = TaskDB.getTaskName(temp.getType());
+                int projId = temp.getProjectID();
+                System.out.print(temp.toString());
+                int TaskId = temp.getId();
+                %>
+                    
+                        <td><%=temp.getStartDate()%></td>
+                        <td><%=depname%></td>
+                        <td><%=taskname%></td>
+                        <%if (!temp.isIsComplete()){%>
+                        <td>Ongoing</td>
+                        <%} else {%>
+                        <td>Complete</td><%}%>
+                        <td><%=temp.getRemarks()%></td>
+                      
+                    <%
+                i++;}
+                %>
         </table>
       </div>
     </div>
