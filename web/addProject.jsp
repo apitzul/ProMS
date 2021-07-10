@@ -46,12 +46,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <div class="w3-bar-block">
    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Home</a>
+    <a href="home.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Home</a>
     <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
     <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
     <a href="updateTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Update Task</a>
     <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
-    <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a>
+    <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Add project</a>
   </div>
 </nav>
 
@@ -64,28 +64,21 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   <!-- Header -->
   <header class="w3-container" style="padding-top:22px">
-    <h1><b><i class="fa fa-dashboard"></i> Add Project</b></h1>
+    <h1><b>Add Project</b></h1>
   </header>
 
-
-
-  <div class="w3-panel">
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-third">
-        
-
-  <div class="w3-container">
- <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> Project information :</b></h5>
-  </header>
-     
-    
+  <div class="w3-panel w3-row-padding w3-container w3-half" style="margin:0 -16px">
     <head>
         <style> 
             form {
                 border: 3px solid #f1f1f1;
             }
-
+            input{
+                border-radius: 8px;
+            }
+            select{
+                border-radius: 8px;
+            }
             /* Full-width inputs */
             input[type=text], input[type=password] {
                 width: 100%;
@@ -156,13 +149,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
             /* Button used to open the contact form - fixed at the bottom of the page */
             .open-button {
-              background-color: #555;
+              background-color: #04AA6D;
               color: white;
-              padding: 16px 20px;
+              padding: 12px 20px;
               border: none;
               cursor: pointer;
-              opacity: 0.8;
-              width: 280px;
+              width: 170px;
+              border-radius: 8px;
             }
 
             /* The popup form - hidden by default */
@@ -215,17 +208,51 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             }
 
             /* Add some hover effects to buttons */
+            .btn{
+                background-color: #04AA6D;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
             .form-container .btn:hover, .open-button:hover {
               opacity: 1;
-            } 
+            }
+            
+            input[type=submit] {
+                background-color: #04AA6D;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+            input[type=reset] {
+                background-color: #DC143C;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=reset]:hover {
+                background-color: #B22222;
+            }
         </style>
         
 <div class="container">
     <form action="AddprojectServlet" method="POST" enctype="multipart/form-data">
         
-        <label for="projectName"><b>Tittle </b></label>
+        <label for="projectName"><b>Title </b></label>
         <input type="text" placeholder="Enter project" name="projectName" required>
-        
+        <p></p>
         <label for="cName"><b>Select Client</b></label>
         <select class="w3-select" name="cName" id="cName">
 
@@ -246,8 +273,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </select>
         <br>
         <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormClient()">Add New Client</a>
-        <br>
-        
+        <p></p>
         <label for="cName"><b>Select Supplier</b></label>
         <select class="w3-select" name="sName" id="cName">
 
@@ -269,23 +295,20 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <br>
         <a class="open-button w3-bar-item w3-button w3-padding" onclick="openFormSupplier()">Add New Supplier</a>
         <br>
-
-        <label for="adress"><b>Project Address</b></label>
-        <input type="text" placeholder="Project address" name="address" required>
-        
+        <p></p>
+        <label for="address"><b>Project Address</b></label>
+        <input type="text" placeholder="Enter Project Address" name="address" style="height:90px" required>
+        <p></p>
         <label for="start date"><b>Start Date</b></label>
         <input class="w3-input" type="date" placeholder="Start date" name="startDate" required><br>
-        
         <label for="est end date"><b>Estimated end date</b></label>
         <input class="w3-input" type="date" placeholder="Estimated end date" name="estEndDate" required><br>
-        
         <label for="quo file"><b>Quatation file</b></label>
         <input class="w3-input" type="file" name="qFile" required>
-
-        <button type="submit">Add project</button>
-        <button type="reset ">cancel</button>
-    </form>
-    <label for="select"><b>Select Supplier</b></label>            
+        <p></p>
+        <input type="submit" value="Add Project"></input>
+        <input type="reset" value="Reset"></input></td>
+    </form>         
         
         <div class="form-popup" id="myForm-client">
                <form action="ClientController" method="post" class="form-container">
@@ -309,9 +332,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="form-popup" id="myForm-supplier">
             <form action="SupplierController" method="post" class="form-container">
                      <h2>Add New Supplier</h2>
-                     
-                    
-
                      <label for="cName"><b>Supplier Name</b></label>
                     <input type="text" placeholder="Enter name" name="sName" required>
 
@@ -325,16 +345,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                      <button type="submit" class="btn cancel" onclick="closeFormSupplier()">Close</button>
                    </form>
             </div> 
-       
         </div>
-
-  <!-- Footer -->
-  <footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-  </footer>
-
-  <!-- End page content -->
 </div>
 
 <script>

@@ -13,60 +13,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-* {box-sizing: border-box;}
-
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
-}
-
-input[type=radio]{
-    margin-left: 10px;
-}
-
-input[type=file] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-input[type=reset] {
-  background-color: #DC143C;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=reset]:hover {
-  background-color: #B22222;
-}
 </style>
 <head>
-        <title>Update Task</title>
+        <title>View Project</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -79,7 +28,10 @@ input[type=reset]:hover {
 </div>
 
 <!-- Sidebar/menu -->
-        <%employee Employee = (employee)session.getAttribute("emp");
+        <% 
+            String user = request.getParameter("user");
+            employeeDB empDB = new employeeDB();
+            employee Employee = empDB.selectEmp(user);
         %>
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container w3-row">
@@ -98,13 +50,12 @@ input[type=reset]:hover {
     <h5>Dashboard</h5>
   </div>
   <div class="w3-bar-block">
-   <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-    <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Home</a>
-    <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
-    <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
-    <a href="updateTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Update Task</a>
-    <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
-    <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  My Dashboard</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
+    <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-eye fa-fw"></i> View Project</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
+    
   </div>
 </nav>
 
@@ -127,57 +78,125 @@ input[type=reset]:hover {
             
         %>
   <header class="w3-container" style="padding-top:22px">
-      <h1><b>Update Task</b></h1>
+      <h1><b><u><%= Pro.getTitle()%></u></b></h1>
   </header>
     <div class="w3-container">
+        <p><h5><b>Progress</b></h5></p>
     <div class="w3-grey">
+        <div class="
+             <% 
+                 if(Pro.getStatus()<= 35){
+                    %>w3-container w3-center w3-padding w3-red<%
+                 }
+                 else if(Pro.getStatus()> 35 && Pro.getStatus()<= 75){
+                    %>w3-container w3-center w3-padding w3-yellow<%
+                 }
+                 else if(Pro.getStatus()> 75 && Pro.getStatus()<= 100){
+                    %>w3-container w3-center w3-padding w3-green<%
+                 }
+                 else
+                    %>w3-container w3-center w3-padding <%
+             %>"
+             style="width:<%= Pro.getStatus()%>%"><%= Pro.getStatus()%>%</div>
     </div>
     </div>
   <div class="w3-panel">
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
+          <h5><b>Details</b></h5>
         <table class="w3-table w3-striped w3-white">
-        <form name="form" action="taskList.jsp" method="post">
           <tr>
-              <td><h5><b>Task Type:</b></h5>
-              <input type="text" name="taskType" placeholder="Enter task type"/></td>
+
+            <td><h5>Title:</h5></td>
+            <td><h5><%= Pro.getTitle()%></h5></td>
           </tr>
           <tr>
-              <td><h5><b>Status:</b></h5>
-                <input type="radio" id="complete" name="status" value="Complete">
-                <label for="complete">Complete</label>
-                <input type="radio" id="pending" name="status" value="Pending">
-                <label for="pending">Pending</label>
-            </td>
+
+            <td><h5>Client Name:</h5></td>
+            <td><h5><%= clie.getClientName()%></h5></td>
           </tr>
           <tr>
-              <td><h5><b>Department:</b></h5>
-                <input type="radio" id="admin" name="department" value="Administration">
-                <label for="admin">Administration </label>
-                <input type="radio" id="mainten" name="department" value="Maintenance">
-                <label for="mainten">Maintenance</label>
-                <input type="radio" id="sale" name="department" value="Sale">
-                <label for="sale">Sale</label>
-                <input type="radio" id="financ" name="department" value="Financial">
-                <label for="financ">Financial</label></td>
+
+            <td><h5>Client Contact:</h5></td>
+            <td><h5><%= clie.getClientContact()%></h5></td>
           </tr>
           <tr>
-              <td><h5><b>Title:</b></h5>
-              <input type="text" name="taskTitle" placeholder="Enter task title"/>
-              <input type="file" name="uploadFile" id="uploadFile"></td>
+
+            <td><h5>Supplier Name:</h5></td>
+            <td><h5><%= supp.getSupName()%></h5></td>
           </tr>
           <tr>
-              <td><h5><b>Remarks:</b></h5>
-              <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="height:200px"></textarea>
-              </td>
+
+            <td><h5>Supplier Contact:</h5></td>
+            <td><h5><%= supp.getSupContact()%></h5></td>
           </tr>
           <tr>
-            <td><input type="submit" value="Save Update"></input>
-                <input type="reset" value="Cancel Update"></input></td>
+
+            <td><h5>Project Address:</h5></td>
+            <td><h5><%= Pro.getAddress()%></h5></td>
           </tr>
           <tr>
+
+            <td><h5>Start Date:</h5></td>
+            <td><h5><%= Pro.getStartDate()%></h5></td>
           </tr>
-        </form>
+          <tr>
+
+            <td><h5>Est. End Date:</h5></td>
+            <td><h5><%= Pro.getEstEndDate()%></h5></td>
+          </tr>
+          <tr>
+              
+          </tr>
+        </table>
+      </div>
+
+      <div class="w3-twothird">
+          <h5><b>Progress Log</b></h5>
+        <table class="w3-table w3-striped w3-white">
+          <tr>
+              <td><b>Date</b></td>
+              <td><b>Department</b></td>
+              <td><b>Title</b></td>
+              <td><b>Status</b></td>
+              <td><b>Remarks</b></td>
+          </tr>
+          <tr>
+            <td>12/03/2021</td>
+            <td>Account</td>
+            <td>Damansara Project</td>
+            <td>Ongoing</td>
+            <td>Prepare PO</td>
+          </tr>
+          <tr>
+            <td>12/03/2021</td>
+            <td>Account</td>
+            <td>Damansara Project</td>
+            <td>Ongoing</td>
+            <td>Prepare PO</td>
+          </tr>
+          <tr>
+            <td>12/03/2021</td>
+            <td>Account</td>
+            <td>Damansara Project</td>
+            <td>Ongoing</td>
+            <td>Prepare PO</td>
+          </tr>
+          <tr>
+            <td>12/03/2021</td>
+            <td>Account</td>
+            <td>Damansara Project</td>
+            <td>Ongoing</td>
+            <td>Prepare PO</td>
+          </tr>
+          <tr>
+            <td>12/03/2021</td>
+            <td>Account</td>
+            <td>Damansara Project</td>
+            <td>Ongoing</td>
+            <td>Prepare PO</td>
+          </tr>
+          </tr>
         </table>
       </div>
     </div>
