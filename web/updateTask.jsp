@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.task.taskDB"%>
 <%@page import="com.task.task"%>
@@ -122,8 +123,12 @@ input[type=reset]:hover {
   <!-- Header -->
   <% 
             String id = request.getParameter("id");
+            String proID = request.getParameter("proID");
             projectDB proDB = new projectDB();
-            project Pro = proDB.selectProject(Integer.parseInt(id));
+            project Pro = proDB.selectProject(Integer.parseInt(proID));
+            
+            LocalDate warrantyD = LocalDate.parse(Pro.getWarranty());
+            LocalDate currentD = java.time.LocalDate.now();
             
             supplier supp = (supplier) Pro.getSupplier();
             client clie = (client) Pro.getClient();
@@ -198,8 +203,16 @@ input[type=reset]:hover {
           <tr>
               <td><h5><b>Title:</b></h5>
                   <input type="text" name="taskDesc" placeholder="Enter task title" value="<%=Desc%>" readonly="readonlu"/>
-                  <input type="file" name="uploadFile" id="uploadFile"></td>
+                  <input type="file" name="uploadFile" id="uploadFile">
+              <% if(Task.getDepid()==1){%>
+                <a class="open-button w3-bar-item w3-button w3-padding" onclick="CheckWarranty()">Check Warranty</a>
+
+                <% if(warrantyD.isBefore(currentD)){%>
+                <h6 id="warrant-row" style="display: none" class="w3-red">Warranty Not available</h6><%} else{%>
+                <h6 id="warrant-row" style="display: none" class="w3-green">Warranty still available</h6><%}%>
+                <%}%></td>
           </tr>
+          
           <tr>
               <td><h5><b>Remarks:</b></h5>
               <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="height:200px"></textarea>
@@ -243,6 +256,10 @@ function w3_open() {
 function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
+}
+
+function CheckWarranty() {
+    document.getElementById("warrant-row").style.display = "block";
 }
 </script>
 

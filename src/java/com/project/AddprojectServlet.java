@@ -128,6 +128,7 @@ public class AddprojectServlet extends HttpServlet {
         Project.setSupplierID(SupID);
         Project.setQuotFile(image);
         Project.setStatus(0);
+        Project.setWarranty(java.time.LocalDate.now().plusYears(3).toString());
         String addProject = ProDB.addProject(Project);
         
         

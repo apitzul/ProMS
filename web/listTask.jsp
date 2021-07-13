@@ -1,3 +1,4 @@
+<%@page import="com.util.dataDB"%>
 <%@page import="com.task.taskDB"%>
 <%@page import="com.task.task"%>
 <%@page import="java.util.ArrayList"%>
@@ -243,8 +244,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   %>
   <header class="w3-container" style="padding-top:22px">
       <h1><b>Task List</b></h1><br>
-      <%if(Employee.getDepID()==3){%>
-      <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a><%}%>
+      <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a>
   </header>
     <div class="w3-container">
     <div class="w3-grey">
@@ -273,7 +273,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                         <td><%=name%></td>
                         <td><%=temp.getDueDate()%></td>
                         <td><a href="viewProject.jsp?id=<%=projId%>" class="button1">View Project</a></td>
-                        <td><a href="updateTask.jsp?id=<%=TaskId%>" class="button2">Update Task</a></td>
+                        <td><a href="updateTask.jsp?id=<%=TaskId%>&proID=<%=projId%>" class="button2">Update Task</a></td>
                      </tr>
                     <%}
                 i++;}
@@ -285,16 +285,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <hr>
   <!-- End page content -->
     <div class="form-popup" id="myForm">
-              <form action="AddTask" method="post" class="form-container">
+              <form action="AddTaskServlet" method="post" class="form-container">
                        <h2>Add New Task</h2>
 
                        <label for="tasktype"><b>Task Type</b></label>
                        <select class="w3-select" name="tasktype">
-                           <option value="1">Task 1</option>
-                           <option value="2">Task 2</option>
-                           <option value="3">Task 3</option>
-                           <option value="4">Task 4</option>
-                           <option value="5">Task 5</option>
+                           <option value="1">Update Invoice</option>
+                           <option value="2">Update POV</option>
+                           <option value="3">Update Maintenance</option>
+                           <option value="4">Update Payment</option>
+                           <option value="5">Update POV Balance</option>
                        </select><br><p>
 
                       <label for="department"><b>Task Type</b></label>
@@ -304,6 +304,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                            <option value="2">Sale</option>                         
                            <option value="3">Admin</option>
                            <option value="4">Finance</option>
+
+                       </select><br><p>
+                           
+                       <label for="project"><b>Choose Project</b></label>
+                       <select class="w3-select" name="Project">
+                           <% 
+                               dataDB util = new dataDB();
+                                for(int j=1; j<=util.getSize("project"); j++){
+
+                                  projectDB proDB = new projectDB();
+                                  project Pro = proDB.selectProject(j);
+                             %>
+                           <option value="<%=Pro.getId()%>"><%=Pro.getTitle()%></option><%}%>
 
                        </select><br><p>
                         <b>Remarks:</b><br>

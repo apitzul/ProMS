@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.project;
+package com.task;
 
 import com.employee.employee;
+import com.project.client;
+import com.project.clientDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author aidie
  */
-public class ClientController extends HttpServlet {
+public class AddTaskServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class ClientController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ClientController</title>");            
+            out.println("<title>Servlet AddTaskServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ClientController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddTaskServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -85,38 +87,33 @@ public class ClientController extends HttpServlet {
             
             //Retrive form parameters
             
-            String name = request.getParameter("cName");
-            String phone = request.getParameter("cContact");
-            String address = request.getParameter("cAddress");
-            
-            //Form Verification 
-            if (name == null || name.trim().length() == 0) {
-                errorMsgs.add("Please insert name.");
-            }
-            if (phone == null || phone.trim().length() == 0) {
-                errorMsgs.add("Please insert Phone number.");
-            }
-            if (address == null || address.trim().length() == 0) {
-                errorMsgs.add("Please insert designation.");
-            }
+            String name = request.getParameter("tasktype");
+            String department = request.getParameter("department");
+            String remarks = request.getParameter("taskRemarks");
+            String proID = request.getParameter("Project");
             
             //Business logic
-            client Client = new client();
-            Client.setClientName(name);
-            Client.setClientContact(phone);
-            Client.setClientAddress(address);
+            taskDB TaskDB = new taskDB();
+            task Task = new task();
             
-            clientDB ClientDB = new clientDB();
+            Task.setStartDate(java.time.LocalDate.now().toString());
+            Task.setDueDate(java.time.LocalDate.now().plusDays(5).toString());
+            Task.setIsComplete(false);
+            Task.setLateTask(false);
+            Task.setProjectID(Integer.parseInt(proID));
+            Task.setRemarks(remarks);
+            Task.setType(Integer.parseInt(name));
+            Task.setDepid(Integer.parseInt(department));
             
-            String clientRegistered = ClientDB.addClient(Client);
+            String nextTask = TaskDB.addTask(Task);
             
-            if(clientRegistered.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+            if(nextTask.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
-                request.getRequestDispatcher("/addProject.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
+                request.getRequestDispatcher("/listTask.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.
             }
             else
             {
-                request.setAttribute("errMessage", clientRegistered); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
+                request.setAttribute("errMessage", nextTask); //If authenticateUser() function returnsother than SUCCESS string it will be sent to Login page again. Here the error message returned from function has been stored in a errMessage key.
                 request.getRequestDispatcher("/home.jsp").forward(request, response);//forwarding the request
             }
     }

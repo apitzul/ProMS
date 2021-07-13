@@ -6,6 +6,8 @@
 package com.task;
 
 import com.employee.employee;
+import com.project.project;
+import com.project.projectDB;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -80,7 +82,11 @@ public class TaskServlet extends HttpServlet {
         
         //declare java class
         task Task = new task();
+        project Pro = new project(); 
         taskDB TaskDB = new taskDB();
+        projectDB ProDB = new projectDB();
+        
+        
         
         HttpSession session = request.getSession();
         employee Employee = (employee)session.getAttribute("emp");
@@ -91,15 +97,23 @@ public class TaskServlet extends HttpServlet {
         String DueDate = request.getParameter("DueDate");
         LocalDate dueD = LocalDate.parse(DueDate); 
         
+        
+        Pro = ProDB.selectProject(Integer.parseInt(proID));
+        
         //retrieve employee id 
         int empID = Employee.getId();
         
         //retrieve value status from form
         boolean stats = false;
         boolean lateTask = false;
+        boolean ProStats = false;
+        boolean ProLate = false;
         String status = request.getParameter("status");
         
         LocalDate CompDate = null;
+        LocalDate EstEndD = LocalDate.parse(Pro.getEstEndDate());
+        
+        
         if(status.equals("Complete"))
         {
             stats = true;
@@ -108,6 +122,34 @@ public class TaskServlet extends HttpServlet {
                  lateTask = true;
             }
             Task.setCompletedDate(CompDate.toString());
+            
+            if(Integer.parseInt(TypeID) == 1){
+                Pro.setStatus(20);
+                Pro.setProgress(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+            }
+            else if(Integer.parseInt(TypeID) == 2){
+                Pro.setStatus(40);
+                Pro.setProgress(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+            }
+            else if(Integer.parseInt(TypeID) == 3){
+                Pro.setStatus(60);
+                Pro.setProgress(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+            }
+            else if(Integer.parseInt(TypeID) == 4){
+                Pro.setStatus(80);
+                Pro.setProgress(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+            }
+            else if(Integer.parseInt(TypeID) == 5){
+                Pro.setStatus(100);
+                Pro.setProgress(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+                Pro.setEndDate(CompDate.toString());
+                ProStats = true;
+                
+                if(CompDate.isAfter(EstEndD)){
+                 ProLate = true;
+            }
+            }
+            
         }
         
         //retrieve value file from form
@@ -139,11 +181,14 @@ public class TaskServlet extends HttpServlet {
         Task.setFile(fileName);
         Task.setRemarks(remarks);
         Task.setLateTask(lateTask);
-        
-        
         String updateTask = TaskDB.updateTask(Task); 
         
-    if(updateTask.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+        
+        Pro.setIsCOmplete(ProStats);
+        Pro.setLateProject(ProLate);
+        String updateProject = ProDB.updateProject(Pro);
+        
+    if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
                 
                 request.getRequestDispatcher("/listTask.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.

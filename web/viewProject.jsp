@@ -179,7 +179,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 System.out.print(temp.toString());
                 int TaskId = temp.getId();
                 %>
-                    
+                <tr>
                         <td><%=temp.getStartDate()%></td>
                         <td><%=depname%></td>
                         <td><%=taskname%></td>
@@ -188,7 +188,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                         <%} else {%>
                         <td>Complete</td><%}%>
                         <td><%=temp.getRemarks()%></td>
-                      
+                </tr>
                     <%
                 i++;}
                 %>

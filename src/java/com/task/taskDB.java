@@ -236,6 +236,8 @@ public class taskDB {
     
     public String updateTask(task Task){
         
+        taskDB TaskDB = new taskDB();
+        
         int taskId = Task.getId();
         int empId = Task.getEmpID();
         int proID = Task.getProjectID();
@@ -246,27 +248,26 @@ public class taskDB {
         String remarks = Task.getRemarks();
         String File = Task.getFile();
         
-        int NextdepId;
+        
+        int NextdepId = 0;
+        task nextTask = new task();
+        
+        nextTask.setStartDate(java.time.LocalDate.now().toString());
+        nextTask.setDueDate(java.time.LocalDate.now().plusDays(5).toString());
+        nextTask.setIsComplete(false);
+        nextTask.setLateTask(false);
+        nextTask.setProjectID(proID);
+        nextTask.setRemarks(" ");
         
         if(IsComp){
             
-            projectDB ProDB = new projectDB();
-            
-            if(TypeID==1)
+            if(TypeID==1 || TypeID==4)
+            {
                 NextdepId=4;//financial
-            
-            else if(TypeID==2)
-                NextdepId=3;//financial
-            
-            else if(TypeID==3)
-                NextdepId=4;//financial
-            
-            else if(TypeID==4)
-                NextdepId=4;//financial
-
-            ProDB.updateProject(proID);
-            //if(Task.getDueDate())  late task
-            //lateTask=true;
+                nextTask.setType(TypeID+1);
+                nextTask.setDepid(NextdepId);
+                String addTask = TaskDB.addTask(nextTask);
+            }
         }
 
         Connection con = null;
@@ -299,5 +300,6 @@ public class taskDB {
         
         return "Oops...";
     }
+    
     
 }

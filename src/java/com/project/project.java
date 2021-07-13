@@ -27,7 +27,7 @@ public class project implements java.io.Serializable{
     private String thumbnail;
     private boolean isComplete;
     private boolean lateProject;
-    private int warranty;
+    private String warranty;
     private int clientID;
     private int supplierID;
 
@@ -36,7 +36,7 @@ public class project implements java.io.Serializable{
 
     public project(int id, String title, supplier supplier, client client, String address, String startDate, 
             String endDate, String estEndDate, int status, String progress, String quotFile, String thumbnail, 
-            boolean isComplete, boolean lateProject, int warranty, int clientID, int supplierID) {
+            boolean isComplete, boolean lateProject, String warranty, int clientID, int supplierID) {
         
         this.id = id;
         this.title = title;
@@ -169,11 +169,11 @@ public class project implements java.io.Serializable{
         this.lateProject = lateProject;
     }
 
-    public int getWarranty() {
+    public String getWarranty() {
         return warranty;
     }
 
-    public void setWarranty(int warranty) {
+    public void setWarranty(String warranty) {
         this.warranty = warranty;
     }
 
