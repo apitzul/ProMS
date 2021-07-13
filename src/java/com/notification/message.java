@@ -16,6 +16,8 @@ public class message implements java.io.Serializable{
     private String remarks;
     private String createDate;
     private String dueDate;
+    private int empFrom;
+    private int empTo;
 
     public message() {
     }
@@ -75,6 +77,22 @@ public class message implements java.io.Serializable{
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public int getEmpFrom() {
+        return empFrom;
+    }
+
+    public void setEmpFrom(int empFrom) {
+        this.empFrom = empFrom;
+    }
+
+    public int getEmpTo() {
+        return empTo;
+    }
+
+    public void setEmpTo(int empTo) {
+        this.empTo = empTo;
     }
     
 }
