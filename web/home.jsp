@@ -1,3 +1,7 @@
+<%@page import="java.time.LocalDate"%>
+<%@page import="com.task.taskDB"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.task.task"%>
 <%@page import="com.employee.employee"%>
 <!DOCTYPE html>
 <html>
@@ -46,12 +50,11 @@ footer{
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
     <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Home</a>
-    <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a>
+    <%if(Employee.getDepname().equals("Sales")){%>
+    <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a><%}%>
     <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
-    <a href="viewProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Project</a>
-    <a href="updateTask.jsp?id=1" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Update Task</a>
-    <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Task List</a>
-    <a href="viewReport.jsp?id=1" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i> View Report</a>
+    <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-server fa-fw"></i>  Task List</a>
+    <a href="LogoutServlet" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
   </div>
 </nav>
 
@@ -110,46 +113,38 @@ footer{
     </div>
   </div>
 
+  <%
+      ArrayList<task> taskList = new ArrayList<task>();
+      taskDB TaskDB = new taskDB();
+      taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
+  %>
+  
   <div class="w3-panel">
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
           <h4><b>Feeds</b></h4>
         <table class="w3-table w3-striped w3-white">
-          <tr>
-            <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
-            <td>New project: Gamuda Tower.</td>
-            <td><i>10 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-            <td>Finance Department generate invoice to client.</td>
-            <td><i>15 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-            <td>FInance Department generate POV to supplier.</td>
-            <td><i>17 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
-            <td>New project: MRT Kajang.</td>
-            <td><i>25 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-            <td>If warranty still available, do maintenance.</td>
-            <td><i>28 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
-            <td>New project: PLUS Project.</td>
-            <td><i>35 mins ago</i></td>
-          </tr>
-          <tr>
-            <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
-            <td>If there is POV balance, finance pay at supplier.</td>
-            <td><i>39 mins ago</i></td>
-          </tr>
+            <%
+              int i = 0;
+          while(i<taskList.size()){
+
+                task temp= (task) taskList.get(i);
+                String name = TaskDB.getTaskName(temp.getType());
+                
+                LocalDate dueDate = LocalDate.parse(temp.getDueDate());
+                LocalDate now = java.time.LocalDate.now();
+                
+                int projId = temp.getProjectID();
+                int TaskId = temp.getId();
+            %><%if(dueDate.isEqual(now.plusDays(2))){%>
+                     <tr>
+                        <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
+                        <td>New project: Gamuda Tower.</td>
+                        <td><i><%=temp.getStartDate()%></i></td>
+                     </tr>
+                    <%}
+                i++;}
+                %>
         </table>
       </div>
     </div>
