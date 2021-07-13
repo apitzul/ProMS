@@ -128,14 +128,14 @@ public class AddprojectServlet extends HttpServlet {
         Project.setSupplierID(SupID);
         Project.setQuotFile(image);
         Project.setStatus(0);
-        Project.setWarranty(java.time.LocalDate.now().plusYears(3).toString());
+        Project.setWarranty(java.time.LocalDate.now().plusDays(5).toString());
         String addProject = ProDB.addProject(Project);
         
         
         int ID = ProDB.selectLatestProj();
         Task.setType(1);
         Task.setStartDate(java.time.LocalDate.now().toString());
-        Task.setDueDate(java.time.LocalDate.now().plusDays(5).toString());
+        Task.setDueDate(java.time.LocalDate.now().plusDays(2).toString());
         Task.setIsComplete(false);
         Task.setLateTask(false);
         Task.setDepid(4);

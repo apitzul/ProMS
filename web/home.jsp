@@ -262,8 +262,6 @@ footer{
       taskDB TaskDB = new taskDB();
       messageDB MessageDB = new messageDB();
       
-      System.out.print("HAHAHAH" + Employee.toString());
-      
       messageList = MessageDB.selectMessageEmployee(Employee);
       taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
   %>
@@ -273,23 +271,25 @@ footer{
       <div class="w3-twothird">
           <h4><b>Feeds</b></h4>
           <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Send Message</a> 
+          <div style="overflow-y: auto;height: 250px">
         <table class="w3-table w3-striped w3-white">
                 <%
                  int j = 0;
                 while(j<messageList.size()){
               
                 message temp= (message) messageList.get(j);
+                System.out.print("Hi" + temp.toString());
                 if(temp.getType().equals("Task")){
             %>
                      <tr>
-                        <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
+                        <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
                         <td>New Task: <%=temp.getTitle()%></td>
                         <td  style="color: red"><i>Due Date: <%=temp.getCreateDate()%></i></td>
                      </tr>
                     <%} else if(temp.getType().equals("Message")){
             %>
                      <tr>
-                        <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
+                        <td><i class="fa fa-envelope w3-text-blue w3-large"></i></td>
                         <td>New Message: <%=temp.getTitle()%></td>
                         <td  style="color: green"><i>Date: <%=temp.getCreateDate()%></i></td>
                      </tr>
@@ -297,6 +297,7 @@ footer{
                 j++;} 
                 %>
         </table>
+          </div>
       </div>
     </div>
   </div>

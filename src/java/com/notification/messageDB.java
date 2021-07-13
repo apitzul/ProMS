@@ -89,7 +89,7 @@ public class messageDB {
          {
              Connection con = DBconnection.createConnection(); //Fetch database connection object
              Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
-             ResultSet resultSet = statement.executeQuery("select * from message"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+             ResultSet resultSet = statement.executeQuery("select * from message order by id desc"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
  
              while(resultSet.next()) // Until next row is present otherwise it return false
              { 
@@ -98,13 +98,13 @@ public class messageDB {
              
                 String id= resultSet.getString("id");
                 String title= resultSet.getString("title");
-                String type= resultSet.getString("type");
                 String remarks= resultSet.getString("remarks");
                 String createdate= resultSet.getString("createdate");
                 String empFrom= resultSet.getString("empfrom");
                 String empTo= resultSet.getString("empto");
+                String type= resultSet.getString("type");
                
-                if(type.equals("Task")){
+                if(type.equals("Message")){
                     if(emp.getId() == (Integer.parseInt(empTo)))
                     {
                         Message.setId(Integer.parseInt(id));
@@ -119,7 +119,7 @@ public class messageDB {
                         ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
                     }
                 }
-                else if(type.equals("Message")){
+                else if(type.equals("Task")){
                     if(emp.getDepID() == (Integer.parseInt(empTo))){
                         
                     Message.setId(Integer.parseInt(id));

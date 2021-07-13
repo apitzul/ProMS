@@ -203,8 +203,8 @@ public class TaskServlet extends HttpServlet {
         SMS.setType("Task");
         
         String addSMS = SMSdb.addMessage(SMS);
-        
-    if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+        System.out.print(addSMS);
+    if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS") && addSMS.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
                 
                 request.getRequestDispatcher("/listTask.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.

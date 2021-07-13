@@ -6,6 +6,8 @@
 package com.task;
 
 import com.employee.employee;
+import com.notification.message;
+import com.notification.messageDB;
 import com.project.client;
 import com.project.clientDB;
 import java.io.IOException;
@@ -84,6 +86,8 @@ public class AddTaskServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         List errorMsgs = new LinkedList();
         
+        //retrieve employee id 
+        int empID = Employee.getId();
             
             //Retrive form parameters
             
@@ -106,6 +110,19 @@ public class AddTaskServlet extends HttpServlet {
             Task.setDepid(Integer.parseInt(department));
             
             String nextTask = TaskDB.addTask(Task);
+            
+            //Message
+            messageDB SMSdb = new messageDB();
+            message SMS = new message();
+
+            SMS.setTitle(TaskDB.getTaskName(Integer.parseInt(name)));
+            SMS.setRemarks(Task.getRemarks());
+            SMS.setCreateDate(Task.getDueDate());
+            SMS.setEmpFrom(empID);
+            SMS.setEmpTo(Integer.parseInt(department));
+            SMS.setType("Task");
+
+            String addSMS = SMSdb.addMessage(SMS);
             
             if(nextTask.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
