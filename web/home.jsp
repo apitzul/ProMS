@@ -1,3 +1,4 @@
+<%@page import="com.employee.employeeDB"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="com.task.taskDB"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,6 +20,146 @@ footer{
     font-size: 12px;
     line-height: 0.8;
 }
+
+.cancelbtn {
+                width: auto;
+                padding: 10px 18px;
+                background-color: #f44336;
+            }
+
+            /* Center the avatar image inside this container */
+            .imgcontainer {
+                text-align: center;
+                margin: 24px 0 12px 0;
+            }
+
+            /* Avatar image */
+            img.avatar {
+                width: 40%;
+                border-radius: 50%;
+            }
+
+            /* Add padding to containers */
+            .container {
+                padding: 16px;
+            }
+
+            /* The "Forgot password" text */
+            span.psw {
+                float: right;
+                padding-top: 16px;
+            }   
+
+            /* Change styles for span and cancel button on extra small screens */
+            @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+            }
+            *{box-sizing: border-box;}
+
+            /* Button used to open the contact form - fixed at the bottom of the page */
+            .open-button {
+              background-color: #04AA6D;
+              color: white;
+              padding: 12px 20px;
+              border: none;
+              cursor: pointer;
+              width: 170px;
+              border-radius: 8px;
+            }
+
+            /* The popup form - hidden by default */
+            .form-popup {
+              display: none;
+              position: fixed;
+              bottom: 0;
+              right: 15px;
+              border: 3px solid #f1f1f1;
+              z-index: 9;
+            }
+
+            /* Add styles to the form container */
+            .form-container {
+              max-width: 300px;
+              padding: 10px;
+              background-color: white;
+            }
+
+            /* Full-width input fields */
+            .form-container input[type=text], .form-container input[type=password] {
+              width: 100%;
+              padding: 15px;
+              margin: 5px 0 22px 0;
+              border: none;
+              background: #f1f1f1;
+            }
+
+            /* When the inputs get focus, do something */
+            .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+              background-color: #ddd;
+              outline: none;
+            }
+
+            /* Set a style for the submit/login button */
+            .form-container .btn {
+              background-color: #04AA6D;
+              color: white;
+              padding: 16px 20px;
+              border: none;
+              cursor: pointer;
+              width: 100%;
+              margin-bottom:10px;
+              opacity: 0.8;
+            }
+
+            /* Add a red background color to the cancel button */
+            .form-container .cancel {
+              background-color: red;
+            }
+
+            /* Add some hover effects to buttons */
+            .btn{
+                background-color: #04AA6D;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+            .form-container .btn:hover, .open-button:hover {
+              opacity: 1;
+            }
+            
+            input[type=submit] {
+                background-color: #04AA6D;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+            input[type=reset] {
+                background-color: #DC143C;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=reset]:hover {
+                background-color: #B22222;
+            }
 </style>
 <body class="w3-light-grey">
 
@@ -123,6 +264,7 @@ footer{
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
           <h4><b>Feeds</b></h4>
+          <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a> 
         <table class="w3-table w3-striped w3-white">
             <%
               int i = 0;
@@ -199,8 +341,42 @@ footer{
     <p>e: hello@mkrhartamas.com</p>
     <p>t: +603-26157917</p>
 </footer>
-  </div>
+  
+  <div class="form-popup" id="myForm">
+              <form action="MessageServlet" method="post" class="form-container">
+                    <h2>Add New Message</h2>
 
+                    <label for="title"><b>Title</b></label>
+                     <input type="text" placeholder="Enter title" name="title" required>
+                     
+                     <label for="type"><b>Type</b></label>
+                     <input type="text" placeholder="Enter title" name="type" required>
+
+                    </select><br><p>
+                     <b>Message:</b><br>
+                     <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="width:100%;height:100px"></textarea>
+                     
+                     <label for="emp">Send To:</label>
+                     <input class="w3-select" list="emp" name="emp" id="emp" placeholder="Enter employee name">
+                     <datalist >
+                         <%
+                         ArrayList<employee> empList = new ArrayList<employee>();
+                         employeeDB empDB=new employeeDB();
+                         
+                         empList=empDB.selectEmp();
+                         for(int j=0;j<empList.size();j++){
+                         
+                         employee emp= (employee) empList.get(i);%>
+                         <option value="<%=emp.getId()%>"><%=emp.getName()%></option><%}%>
+                     </datalist>
+                      <br>
+                    <button type="submit" class="btn">Add New Message</button>
+                    <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
+                  </form>
+      </div> 
+  
+  </div>
+  
 <script>
 // Get the Sidebar
 var mySidebar = document.getElementById("mySidebar");
@@ -223,6 +399,15 @@ function w3_open() {
 function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
+}
+
+function openForm() {
+
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
 }
 </script>
 

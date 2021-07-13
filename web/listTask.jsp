@@ -327,7 +327,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                        </select><br><p>
                         <b>Remarks:</b><br>
                         <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="width:100%;height:100px"></textarea>
-                       <button type="submit" class="btn">Add New Supplier</button>
+                       <button type="submit" class="btn">Add New Task</button>
                        <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
                      </form>
       </div> 
