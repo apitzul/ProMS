@@ -109,7 +109,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             dataDB util = new dataDB();
         %>
   <header class="w3-container" style="padding-top:22px">
-      <h1><b><u>List of Project</u></b></h1>
+      <h1><b>List of Project</b></h1>
   </header>
   <div class="container">
       <ul> 
