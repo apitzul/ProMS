@@ -5,6 +5,7 @@
  */
 package com.task;
 
+import com.employee.employee;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;
@@ -212,8 +213,67 @@ public class taskDB {
         return null;
     }
     
-    public void updateTask(){
+    public String updateTask(task Task,employee emp){
         
+        int empId=emp.getId();
+        
+        int taskId = Task.getId();
+        int taskType = Task.getType();
+        
+        boolean IsComp = Task.isIsComplete();
+        boolean lateTask=false;
+        String remarks = Task.getRemarks();
+        
+        int depId;
+        
+        if(IsComp){
+            
+            if(taskType==1)
+                depId=4;//financial
+            
+            else if(taskType==2)
+                depId=4;//financial
+            
+            else if(taskType==3)
+                depId=4;//financial
+            
+            else if(taskType==4)
+                depId=4;//financial
+
+            taskType++;
+            
+            //if(Task.getDueDate())  late task
+            //lateTask=true;
+        }
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        
+        try
+         {
+            con = DBconnection.createConnection(); //Fetch database connection object
+            String query = "UPDATE TASK SET ISCOMPLETE = ?,LATETASK = ?,REMARKS = ?,EMPID=?,TYPE=?,DEPAID=? WHERE ID=?";
+            pstmt = con.prepareStatement(query);
+            
+            
+            pstmt.setBoolean(1, IsComp);
+            pstmt.setBoolean(2, lateTask);
+            pstmt.setString(3, remarks);
+            pstmt.setInt(4,empId);
+            pstmt.setInt(5,taskType);
+            pstmt.setInt(6,taskId);
+            
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(taskDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "Oops...";
     }
     
 }
