@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.task.taskDB"%>
+<%@page import="com.task.task"%>
+<%@page import="com.task.task"%>
 <%@page import="com.project.client"%>
 <%@page import="com.project.supplier"%>
 <%@page import="com.project.project"%>
@@ -125,6 +129,10 @@ input[type=reset]:hover {
             client clie = (client) Pro.getClient();
             
             
+            ArrayList<task> taskList = new ArrayList<task>();
+            taskDB TaskDB = new taskDB();
+            taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
+
         %>
   <header class="w3-container" style="padding-top:22px">
       <h1><b>Update Task</b></h1>
@@ -137,10 +145,33 @@ input[type=reset]:hover {
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
         <table class="w3-table w3-striped w3-white">
-        <form name="form" action="taskList.jsp" method="post">
+        <form name="form" action="TaskServlet" method="post" enctype="multipart/form-data">
+            
+             <%
+              int i = 0;
+              task Task = new task();
+          while(i<taskList.size()){
+
+                task temp= (task) taskList.get(i);
+                
+                int projId = temp.getProjectID();
+                int TaskId = temp.getId();
+                
+                if (TaskId == Integer.parseInt(id)){
+                    Task = temp;
+                }
+
+                i++;}
+          
+                String name = TaskDB.getTaskName(Task.getType());
+                String Desc = TaskDB.getTaskDesc(Task.getType());
+                %>
+            
           <tr>
               <td><h5><b>Task Type:</b></h5>
-              <input type="text" name="taskType" placeholder="Enter task type"/></td>
+              <input type="text" name="taskType" placeholder="Enter task type" value="<%=name%>" readonly="readonly"/></td>
+              <input type="hidden" name="TTID" value="<%=Task.getType()%>">
+              <input type="hidden" name="proID" value="<%=Task.getProjectID()%>">
           </tr>
           <tr>
               <td><h5><b>Status:</b></h5>
@@ -148,23 +179,26 @@ input[type=reset]:hover {
                 <label for="complete">Complete</label>
                 <input type="radio" id="pending" name="status" value="Pending">
                 <label for="pending">Pending</label>
+                <input type="hidden" name="DueDate" value="<%=Task.getDueDate()%>">
             </td>
           </tr>
           <tr>
               <td><h5><b>Department:</b></h5>
-                <input type="radio" id="admin" name="department" value="Administration">
-                <label for="admin">Administration </label>
-                <input type="radio" id="mainten" name="department" value="Maintenance">
-                <label for="mainten">Maintenance</label>
-                <input type="radio" id="sale" name="department" value="Sale">
-                <label for="sale">Sale</label>
-                <input type="radio" id="financ" name="department" value="Financial">
-                <label for="financ">Financial</label></td>
+                  <% if(Task.getDepid()== 1){%>
+                  <input id="mainten" name="department" value="Maintenance" readonly="readonly">
+                  <%} else if(Task.getDepid()== 2){%>
+                <input id="sale" name="department" value="Sale" readonly="readonly">
+                <%} else if(Task.getDepid()== 3){%>
+                <input id="admin" name="department" value="Administration" readonly="readonly">
+                <%} else if(Task.getDepid()== 4){%>
+                <input id="financ" name="department" value="Financial" readonly="readonly">
+                <%}%>
+                
           </tr>
           <tr>
               <td><h5><b>Title:</b></h5>
-              <input type="text" name="taskTitle" placeholder="Enter task title"/>
-              <input type="file" name="uploadFile" id="uploadFile"></td>
+                  <input type="text" name="taskDesc" placeholder="Enter task title" value="<%=Desc%>" readonly="readonlu"/>
+                  <input type="file" name="uploadFile" id="uploadFile"></td>
           </tr>
           <tr>
               <td><h5><b>Remarks:</b></h5>
@@ -173,6 +207,7 @@ input[type=reset]:hover {
           </tr>
           <tr>
             <td><input type="submit" value="Save Update"></input>
+                <input type="hidden" name="Taskid" value="<%=Task.getId()%>">
                 <input type="reset" value="Cancel Update"></input></td>
           </tr>
           <tr>

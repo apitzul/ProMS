@@ -6,6 +6,7 @@
 package com.task;
 
 import com.employee.employee;
+import com.project.projectDB;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;
@@ -213,35 +214,57 @@ public class taskDB {
         return null;
     }
     
-    public String updateTask(task Task,employee emp){
+    public String getTaskDesc(int TTid){
         
-        int empId=emp.getId();
+        try
+         {
+             Connection con = DBconnection.createConnection(); //Fetch database connection object
+             Statement statement = con.createStatement(); //Statement is used to write queries. Read more about it.
+             ResultSet resultSet = statement.executeQuery("select description from tasktype where id ="+ TTid); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
+ 
+             while(resultSet.next()) // get the last project id
+             {
+                String Desc = resultSet.getString("description");
+                
+                return Desc;
+            }
+            } catch (SQLException ex) {
+               Logger.getLogger(LoginDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return null;
+    }
+    
+    public String updateTask(task Task){
         
         int taskId = Task.getId();
-        int taskType = Task.getType();
-        
+        int empId = Task.getEmpID();
+        int proID = Task.getProjectID();
+        int TypeID = Task.getType();
         boolean IsComp = Task.isIsComplete();
-        boolean lateTask=false;
+        boolean lateTask = Task.isLateTask();
+        String CompDate = Task.getCompletedDate();
         String remarks = Task.getRemarks();
+        String File = Task.getFile();
         
-        int depId;
+        int NextdepId;
         
         if(IsComp){
             
-            if(taskType==1)
-                depId=4;//financial
+            projectDB ProDB = new projectDB();
             
-            else if(taskType==2)
-                depId=4;//financial
+            if(TypeID==1)
+                NextdepId=4;//financial
             
-            else if(taskType==3)
-                depId=4;//financial
+            else if(TypeID==2)
+                NextdepId=3;//financial
             
-            else if(taskType==4)
-                depId=4;//financial
+            else if(TypeID==3)
+                NextdepId=4;//financial
+            
+            else if(TypeID==4)
+                NextdepId=4;//financial
 
-            taskType++;
-            
+            ProDB.updateProject(proID);
             //if(Task.getDueDate())  late task
             //lateTask=true;
         }
@@ -253,16 +276,17 @@ public class taskDB {
         try
          {
             con = DBconnection.createConnection(); //Fetch database connection object
-            String query = "UPDATE TASK SET ISCOMPLETE = ?,LATETASK = ?,REMARKS = ?,EMPID=?,TYPE=?,DEPAID=? WHERE ID=?";
+            String query = "UPDATE TASK SET EMPID=?, ISCOMPLETE = ?,LATETASK = ?, COMPLETEDDATE = ?, REMARKS = ?, FILE = ? WHERE ID = ?";
             pstmt = con.prepareStatement(query);
             
             
-            pstmt.setBoolean(1, IsComp);
-            pstmt.setBoolean(2, lateTask);
-            pstmt.setString(3, remarks);
-            pstmt.setInt(4,empId);
-            pstmt.setInt(5,taskType);
-            pstmt.setInt(6,taskId);
+            pstmt.setInt(1, empId);
+            pstmt.setBoolean(2, IsComp);
+            pstmt.setBoolean(3, lateTask);
+            pstmt.setString(4, CompDate);
+            pstmt.setString(5, remarks);
+            pstmt.setString(6, File);
+            pstmt.setInt(7, taskId);
             
             int R = pstmt.executeUpdate();
             if(R!=0) {

@@ -127,14 +127,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 String name = TaskDB.getTaskName(temp.getType());
                 int projId = temp.getProjectID();
                 int TaskId = temp.getId();
-                %>
+                %><%if(temp.isIsComplete()==false){%>
                     <tr>
                         <td><%=name%></td>
                         <td><%=temp.getDueDate()%></td>
                         <td><a href="viewProject.jsp?id=<%=projId%>" class="button1">View Project</a></td>
                         <td><a href="updateTask.jsp?id=<%=TaskId%>" class="button2">Update Task</a></td>
                      </tr>
-                    <%
+                    <%}
                 i++;}
                 %>
         </table>

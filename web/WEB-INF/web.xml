@@ -16,6 +16,10 @@
         <servlet-name>SupplierController</servlet-name>
         <servlet-class>com.project.SupplierController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TaskServlet</servlet-name>
+        <servlet-class>com.task.TaskServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>SupplierController</servlet-name>
         <url-pattern>/SupplierController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaskServlet</servlet-name>
+        <url-pattern>/TaskServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

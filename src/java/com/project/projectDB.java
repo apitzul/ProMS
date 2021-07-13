@@ -157,7 +157,10 @@ public class projectDB {
         return 0;
     }
     
-    public void updateProject(){
+    public void updateProject(int id){
+        
+        int proID = id;
+        
         
     }
 }
