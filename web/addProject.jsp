@@ -325,7 +325,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 <input type="text" placeholder="Enter address" name="cAddress" required>
 
                  <button type="submit" class="btn">Add New Client</button>
-                 <button type="submit" class="btn cancel" onclick="closeFormClient()">Close</button>
+                 <button type="reset" class="btn cancel" onclick="closeFormClient()">Close</button>
                </form>
         </div> 
     
@@ -342,7 +342,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                     <input type="text" placeholder="Enter address" name="sAddress" required>
 
                      <button type="submit" class="btn">Add New Supplier</button>
-                     <button type="submit" class="btn cancel" onclick="closeFormSupplier()">Close</button>
+                     <button type="reset" class="btn cancel" onclick="closeFormSupplier()">Close</button>
                    </form>
             </div> 
         </div>

@@ -45,6 +45,145 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 .button2:hover {
   background-color: #45a049;
 }
+.cancelbtn {
+                width: auto;
+                padding: 10px 18px;
+                background-color: #f44336;
+            }
+
+            /* Center the avatar image inside this container */
+            .imgcontainer {
+                text-align: center;
+                margin: 24px 0 12px 0;
+            }
+
+            /* Avatar image */
+            img.avatar {
+                width: 40%;
+                border-radius: 50%;
+            }
+
+            /* Add padding to containers */
+            .container {
+                padding: 16px;
+            }
+
+            /* The "Forgot password" text */
+            span.psw {
+                float: right;
+                padding-top: 16px;
+            }   
+
+            /* Change styles for span and cancel button on extra small screens */
+            @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+            }
+            *{box-sizing: border-box;}
+
+            /* Button used to open the contact form - fixed at the bottom of the page */
+            .open-button {
+              background-color: #04AA6D;
+              color: white;
+              padding: 12px 20px;
+              border: none;
+              cursor: pointer;
+              width: 170px;
+              border-radius: 8px;
+            }
+
+            /* The popup form - hidden by default */
+            .form-popup {
+              display: none;
+              position: fixed;
+              bottom: 0;
+              right: 15px;
+              border: 3px solid #f1f1f1;
+              z-index: 9;
+            }
+
+            /* Add styles to the form container */
+            .form-container {
+              max-width: 300px;
+              padding: 10px;
+              background-color: white;
+            }
+
+            /* Full-width input fields */
+            .form-container input[type=text], .form-container input[type=password] {
+              width: 100%;
+              padding: 15px;
+              margin: 5px 0 22px 0;
+              border: none;
+              background: #f1f1f1;
+            }
+
+            /* When the inputs get focus, do something */
+            .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+              background-color: #ddd;
+              outline: none;
+            }
+
+            /* Set a style for the submit/login button */
+            .form-container .btn {
+              background-color: #04AA6D;
+              color: white;
+              padding: 16px 20px;
+              border: none;
+              cursor: pointer;
+              width: 100%;
+              margin-bottom:10px;
+              opacity: 0.8;
+            }
+
+            /* Add a red background color to the cancel button */
+            .form-container .cancel {
+              background-color: red;
+            }
+
+            /* Add some hover effects to buttons */
+            .btn{
+                background-color: #04AA6D;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+            .form-container .btn:hover, .open-button:hover {
+              opacity: 1;
+            }
+            
+            input[type=submit] {
+                background-color: #04AA6D;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+            input[type=reset] {
+                background-color: #DC143C;
+                color: white;
+                padding: 8px 18px;
+                border: none;
+                border-radius: 18px;
+                cursor: pointer;
+            }
+
+            input[type=reset]:hover {
+                background-color: #B22222;
+            }
 </style>
 <head>
         <title>Update Task</title>
@@ -103,7 +242,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
   %>
   <header class="w3-container" style="padding-top:22px">
-      <h1><b>Task List</b></h1>
+      <h1><b>Task List</b></h1><br>
+      <%if(Employee.getDepID()==3){%>
+      <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a><%}%>
   </header>
     <div class="w3-container">
     <div class="w3-grey">
@@ -143,6 +284,34 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <hr>
   <!-- End page content -->
+    <div class="form-popup" id="myForm">
+              <form action="AddTask" method="post" class="form-container">
+                       <h2>Add New Task</h2>
+
+                       <label for="tasktype"><b>Task Type</b></label>
+                       <select class="w3-select" name="tasktype">
+                           <option value="1">Task 1</option>
+                           <option value="2">Task 2</option>
+                           <option value="3">Task 3</option>
+                           <option value="4">Task 4</option>
+                           <option value="5">Task 5</option>
+                       </select><br><p>
+
+                      <label for="department"><b>Task Type</b></label>
+                       <select class="w3-select" name="department">
+
+                           <option value="1">Maintenance</option>
+                           <option value="2">Sale</option>                         
+                           <option value="3">Admin</option>
+                           <option value="4">Finance</option>
+
+                       </select><br><p>
+                        <b>Remarks:</b><br>
+                        <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="width:100%;height:100px"></textarea>
+                       <button type="submit" class="btn">Add New Supplier</button>
+                       <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
+                     </form>
+      </div> 
 </div>
 
 <script>
@@ -167,6 +336,15 @@ function w3_open() {
 function w3_close() {
   mySidebar.style.display = "none";
   overlayBg.style.display = "none";
+}
+
+function openForm() {
+
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
 }
 </script>
 
