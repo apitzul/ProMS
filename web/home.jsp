@@ -275,8 +275,8 @@ footer{
           <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Send Message</a> 
         <table class="w3-table w3-striped w3-white">
                 <%
-              int j = 0;
-          while(j<messageList.size()){
+                 int j = 0;
+                while(j<messageList.size()){
               
                 message temp= (message) messageList.get(j);
                 if(temp.getType().equals("Task")){
@@ -293,7 +293,7 @@ footer{
                         <td>New Message: <%=temp.getTitle()%></td>
                         <td  style="color: green"><i>Date: <%=temp.getCreateDate()%></i></td>
                      </tr>
-                    <%}%> 
+                    <%}
                 j++;} 
                 %>
         </table>
