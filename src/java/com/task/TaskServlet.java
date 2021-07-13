@@ -6,6 +6,8 @@
 package com.task;
 
 import com.employee.employee;
+import com.notification.message;
+import com.notification.messageDB;
 import com.project.project;
 import com.project.projectDB;
 import java.io.IOException;
@@ -95,6 +97,7 @@ public class TaskServlet extends HttpServlet {
         String TypeID = request.getParameter("TTID");
         String proID = request.getParameter("proID");
         String DueDate = request.getParameter("DueDate");
+        String DepID = request.getParameter("department");
         LocalDate dueD = LocalDate.parse(DueDate); 
         
         
@@ -187,6 +190,19 @@ public class TaskServlet extends HttpServlet {
         Pro.setIsCOmplete(ProStats);
         Pro.setLateProject(ProLate);
         String updateProject = ProDB.updateProject(Pro);
+        
+        //Message
+        messageDB SMSdb = new messageDB();
+        message SMS = new message();
+        
+        SMS.setTitle(TaskDB.getTaskName(Integer.parseInt(TypeID)));
+        SMS.setRemarks(Task.getRemarks());
+        SMS.setCreateDate(Task.getDueDate());
+        SMS.setEmpFrom(empID);
+        SMS.setEmpTo(Integer.parseInt(DepID));
+        SMS.setType("Task");
+        
+        String addSMS = SMSdb.addMessage(SMS);
         
     if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {

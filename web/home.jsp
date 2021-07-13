@@ -1,3 +1,5 @@
+<%@page import="com.notification.messageDB"%>
+<%@page import="com.notification.message"%>
 <%@page import="com.employee.employeeDB"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="com.task.taskDB"%>
@@ -256,7 +258,13 @@ footer{
 
   <%
       ArrayList<task> taskList = new ArrayList<task>();
+      ArrayList<message> messageList = new ArrayList<message>();
       taskDB TaskDB = new taskDB();
+      messageDB MessageDB = new messageDB();
+      
+      System.out.print("HAHAHAH" + Employee.toString());
+      
+      messageList = MessageDB.selectMessageEmployee(Employee);
       taskList = TaskDB.selectTaskDepartment(Employee.getDepID());
   %>
   
@@ -264,28 +272,29 @@ footer{
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
           <h4><b>Feeds</b></h4>
-          <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a> 
+          <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Send Message</a> 
         <table class="w3-table w3-striped w3-white">
-            <%
-              int i = 0;
-          while(i<taskList.size()){
-
-                task temp= (task) taskList.get(i);
-                String name = TaskDB.getTaskName(temp.getType());
-                
-                LocalDate dueDate = LocalDate.parse(temp.getDueDate());
-                LocalDate now = java.time.LocalDate.now();
-                
-                int projId = temp.getProjectID();
-                int TaskId = temp.getId();
-            %><%if(dueDate.isEqual(now.plusDays(2))){%>
+                <%
+              int j = 0;
+          while(j<messageList.size()){
+              
+                message temp= (message) messageList.get(j);
+                if(temp.getType().equals("Task")){
+            %>
                      <tr>
                         <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
-                        <td>New project: Gamuda Tower.</td>
-                        <td><i><%=temp.getStartDate()%></i></td>
+                        <td>New Task: <%=temp.getTitle()%></td>
+                        <td  style="color: red"><i>Due Date: <%=temp.getCreateDate()%></i></td>
                      </tr>
-                    <%}
-                i++;}
+                    <%} else if(temp.getType().equals("Message")){
+            %>
+                     <tr>
+                        <td><i class="fa fa-laptop w3-text-blue w3-large"></i></td>
+                        <td>New Message: <%=temp.getTitle()%></td>
+                        <td  style="color: green"><i>Date: <%=temp.getCreateDate()%></i></td>
+                     </tr>
+                    <%}%> 
+                j++;} 
                 %>
         </table>
       </div>
@@ -344,29 +353,26 @@ footer{
   
   <div class="form-popup" id="myForm">
               <form action="MessageServlet" method="post" class="form-container">
-                    <h2>Add New Message</h2>
+                    <h2>Send Message</h2>
 
                     <label for="title"><b>Title</b></label>
                      <input type="text" placeholder="Enter title" name="title" required>
                      
-                     <label for="type"><b>Type</b></label>
-                     <input type="text" placeholder="Enter title" name="type" required>
-
-                    </select><br><p>
                      <b>Message:</b><br>
-                     <textarea id="taskRemarks" name="taskRemarks" placeholder="Write detail progress" style="width:100%;height:100px"></textarea>
+                     <textarea id="taskRemarks" name="taskRemarks" placeholder="Write Message" style="width:100%;height:100px"></textarea>
                      
                      <label for="emp">Send To:</label>
-                     <input class="w3-select" list="emp" name="emp" id="emp" placeholder="Enter employee name">
-                     <datalist >
+                     <input class="w3-select" list="employee" name="emp" id="emp" placeholder="Enter employee name/id">
+                     <datalist id="employee">
                          <%
                          ArrayList<employee> empList = new ArrayList<employee>();
                          employeeDB empDB=new employeeDB();
                          
                          empList=empDB.selectEmp();
-                         for(int j=0;j<empList.size();j++){
                          
-                         employee emp= (employee) empList.get(i);%>
+                         for(int k=0;k<empList.size();k++){
+                         
+                         employee emp= (employee) empList.get(k);%>
                          <option value="<%=emp.getId()%>"><%=emp.getName()%></option><%}%>
                      </datalist>
                       <br>

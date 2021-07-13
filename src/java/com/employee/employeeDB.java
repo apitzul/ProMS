@@ -84,7 +84,7 @@ public class employeeDB {
     
     public ArrayList<employee> selectEmp(){
         ArrayList<employee> empList = new ArrayList<employee>();
-        employee emp=new employee();
+        
         
         try
          {
@@ -94,6 +94,7 @@ public class employeeDB {
  
              while(resultSet.next()) // Until next row is present otherwise it return false
              {
+                employee emp=new employee();
                 String empname = resultSet.getString("empname");//fetch the values present in database
                 String empid = resultSet.getString("empid"); 
                 String depname = resultSet.getString("depname");

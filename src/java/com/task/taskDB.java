@@ -5,8 +5,6 @@
  */
 package com.task;
 
-import com.employee.employee;
-import com.project.projectDB;
 import com.security.LoginDB;
 import com.util.DBconnection;
 import java.sql.Connection;

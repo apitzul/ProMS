@@ -6,10 +6,10 @@
 package com.notification;
 
 
+import com.employee.employee;
 import com.security.LoginDB;
 import com.task.*;
 import com.util.DBconnection;
-import com.util.dataDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,13 +44,12 @@ public class messageDB {
     
     public String addMessage(message Message){
         
-        int id = Message.getId();
         String title=Message.getTitle();
-        String type=Message.getType();
         String remarks=Message.getRemarks();
         String createDate=Message.getCreateDate();
         int empFrom = Message.getEmpFrom();
         int empTo = Message.getEmpTo();
+        String Type = Message.getType();
        
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -59,16 +58,15 @@ public class messageDB {
         try
          {
             con = DBconnection.createConnection(); //Fetch database connection object
-            String query = "INSERT INTO TASK(ID,TITLE,TYPE,REMARKS,CREATEDATE,EMPFROM,EMPTO VALUES(?,?,?,?,?,?,7)";
+            String query = "INSERT INTO MESSAGE(TITLE,REMARKS,CREATEDATE,EMPFROM,EMPTO,TYPE) VALUES(?,?,?,?,?,?)";
             pstmt = con.prepareStatement(query);
             
-            pstmt.setInt(1, id);
-            pstmt.setString(2, title);
-            pstmt.setString(3, type);
-            pstmt.setString(4, remarks);
-            pstmt.setString(5, createDate);
-            pstmt.setInt(6, empFrom);
-            pstmt.setInt(7, empTo);
+            pstmt.setString(1, title);
+            pstmt.setString(2, remarks);
+            pstmt.setString(3, createDate);
+            pstmt.setInt(4, empFrom);
+            pstmt.setInt(5, empTo);
+            pstmt.setString(6, Type);
             
             int R = pstmt.executeUpdate();
             if(R!=0) {
@@ -84,7 +82,7 @@ public class messageDB {
     }
     
     
-    public ArrayList<message> selectMessageEmployee(int empID){
+    public ArrayList<message> selectMessageEmployee(employee emp){
        
         ArrayList<message> messageList=new ArrayList<message>();
         try
@@ -94,7 +92,7 @@ public class messageDB {
              ResultSet resultSet = statement.executeQuery("select * from message"); //the table name is users and userName,password are columns. Fetching all the records and storing in a resultSet.
  
              while(resultSet.next()) // Until next row is present otherwise it return false
-             {  task Task = new task();
+             { 
              
                 message Message=new message();
              
@@ -103,12 +101,27 @@ public class messageDB {
                 String type= resultSet.getString("type");
                 String remarks= resultSet.getString("remarks");
                 String createdate= resultSet.getString("createdate");
-                
                 String empFrom= resultSet.getString("empfrom");
                 String empTo= resultSet.getString("empto");
                
-                if(empID == (Integer.parseInt(empTo)))
-                {
+                if(type.equals("Task")){
+                    if(emp.getId() == (Integer.parseInt(empTo)))
+                    {
+                        Message.setId(Integer.parseInt(id));
+                        Message.setTitle(title);
+                        Message.setType(type);
+                        Message.setRemarks(remarks);
+                        Message.setCreateDate(createdate);
+                        Message.setEmpFrom(Integer.parseInt(empFrom));
+                        Message.setEmpTo(Integer.parseInt(empTo));
+
+                        messageList.add(Message);
+                        ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
+                    }
+                }
+                else if(type.equals("Message")){
+                    if(emp.getDepID() == (Integer.parseInt(empTo))){
+                        
                     Message.setId(Integer.parseInt(id));
                     Message.setTitle(title);
                     Message.setType(type);
@@ -117,10 +130,9 @@ public class messageDB {
                     Message.setEmpFrom(Integer.parseInt(empFrom));
                     Message.setEmpTo(Integer.parseInt(empTo));
 
-                    System.out.println(Task.toString());
-                    
                     messageList.add(Message);
                     ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
+                    }
                 }
                 
             }
