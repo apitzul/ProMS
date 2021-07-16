@@ -28,7 +28,7 @@ and open the template in the editor.
 
             /* Set a style for all buttons */
             button {
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 14px 20px;
                 margin: 8px 0;
@@ -90,7 +90,7 @@ and open the template in the editor.
     <body>
         <form action="LoginServlet" method="post" >
         <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="LogoCompany" class="avatar">
+        <img src="Image/MKR-logo.png" alt="LogoCompany">
         </div>
 
         <div class="container">

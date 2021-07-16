@@ -97,7 +97,7 @@ footer{
     <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Home</a>
     <%if(Employee.getDepname().equals("Sales")){%>
     <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a><%}%>
-    <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
+    <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sort-amount-asc fa-fw"></i>  Project List</a>
     <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-server fa-fw"></i>  Task List</a>
     <a href="LogoutServlet" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
   </div>

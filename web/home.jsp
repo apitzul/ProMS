@@ -66,7 +66,7 @@ footer{
 
             /* Button used to open the contact form - fixed at the bottom of the page */
             .open-button {
-              background-color: #04AA6D;
+              background-color: #0086FF;
               color: white;
               padding: 12px 20px;
               border: none;
@@ -74,7 +74,7 @@ footer{
               width: 170px;
               border-radius: 8px;
             }
-
+            
             /* The popup form - hidden by default */
             .form-popup {
               display: none;
@@ -195,7 +195,7 @@ footer{
     <a href="home.jsp" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Home</a>
     <%if(Employee.getDepname().equals("Sales")){%>
     <a href="addProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Add project</a><%}%>
-    <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Project List</a>
+    <a href="listProject.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sort-amount-asc fa-fw"></i>  Project List</a>
     <a href="listTask.jsp" class="w3-bar-item w3-button w3-padding"><i class="fa fa-server fa-fw"></i>  Task List</a>
     <a href="LogoutServlet" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
   </div>
@@ -306,16 +306,16 @@ footer{
       <h4><b>Employee of The Month</b></h4>
     <ul class="w3-ul w3-card-4 w3-white">
       <li class="w3-padding-16">
-        <img src="/Image/afiq.jpeg" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Jenglot</span><br>
+        <img src="Image/faiz.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Muhammad Amirul Faiz Bin Mohamed Nordin</span><br>
       </li>
       <li class="w3-padding-16">
-        <img src="/Images/charlie.jpg" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Spongebob</span><br>
+        <img src="Image/imman.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Imman Zuhairy Bin Ramlee</span><br>
       </li>
       <li class="w3-padding-16">
-        <img src="/Images/charlie.jpg" class="w3-left w3-circle w3-margin-right" style="width:35px">
-        <span class="w3-xlarge">Squidward</span><br>
+        <img src="Image/charlie.jpg" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <span class="w3-xlarge">Ahmad Aidiel Firdaus Bin Ahmad Tarmizie</span><br>
       </li>
     </ul>
   </div>
