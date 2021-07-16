@@ -8,7 +8,7 @@ and open the template in the editor.
 <html>
     <head>
         <style> 
-            
+            html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             form {
                 border: 3px solid #f1f1f1;
                 margin-right: 25%;
