@@ -89,7 +89,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
             /* Button used to open the contact form - fixed at the bottom of the page */
             .open-button {
-              background-color: #04AA6D;
+              background-color: #0086FF;
               color: white;
               padding: 12px 20px;
               border: none;
@@ -149,7 +149,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
             /* Add some hover effects to buttons */
             .btn{
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 12px 20px;
                 border: none;
@@ -161,7 +161,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             }
             
             input[type=submit] {
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 8px 18px;
                 border: none;
@@ -170,7 +170,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             }
 
             input[type=submit]:hover {
-                background-color: #45a049;
+                opacity: 0.8;
             }
 
             input[type=reset] {

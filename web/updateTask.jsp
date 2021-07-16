@@ -36,7 +36,7 @@ input[type=radio]{
 }
 
 input[type=file] {
-  background-color: #04AA6D;
+  background-color: #0086FF;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -45,7 +45,7 @@ input[type=file] {
 }
 
 input[type=submit] {
-  background-color: #04AA6D;
+  background-color: #0086FF;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -54,7 +54,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  opacity: 0.8;
 }
 
 input[type=reset] {

@@ -97,7 +97,7 @@ footer{
 
             /* Set a style for all buttons */
             button {
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 14px 20px;
                 margin: 8px 0;
@@ -155,7 +155,7 @@ footer{
 
             /* Button used to open the contact form - fixed at the bottom of the page */
             .open-button {
-              background-color: #04AA6D;
+              background-color: #0086FF;
               color: white;
               padding: 12px 20px;
               border: none;
@@ -198,7 +198,7 @@ footer{
 
             /* Set a style for the submit/login button */
             .form-container .btn {
-              background-color: #04AA6D;
+              background-color: #0086FF;
               color: white;
               padding: 16px 20px;
               border: none;
@@ -215,7 +215,7 @@ footer{
 
             /* Add some hover effects to buttons */
             .btn{
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 12px 20px;
                 border: none;
@@ -227,7 +227,7 @@ footer{
             }
             
             input[type=submit] {
-                background-color: #04AA6D;
+                background-color: #0086FF;
                 color: white;
                 padding: 8px 18px;
                 border: none;
@@ -236,7 +236,7 @@ footer{
             }
 
             input[type=submit]:hover {
-                background-color: #45a049;
+                opacity: 0.8;
             }
 
             input[type=reset] {
