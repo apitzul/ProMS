@@ -198,11 +198,11 @@ footer{
                   <% if(Task.getDepid()== 1){%>
                   <input id="mainten" name="department" value="Maintenance" readonly="readonly">
                   <%} else if(Task.getDepid()== 2){%>
-                <input id="sale" name="department" value="Sale" readonly="readonly">
+                <input id="sale" name="department" value="Sales" readonly="readonly">
                 <%} else if(Task.getDepid()== 3){%>
-                <input id="admin" name="department" value="Administration" readonly="readonly">
+                <input id="admin" name="department" value="Admin" readonly="readonly">
                 <%} else if(Task.getDepid()== 4){%>
-                <input id="financ" name="department" value="Financial" readonly="readonly">
+                <input id="financ" name="department" value="Finance" readonly="readonly">
                 <%}%>
                 
           </tr>

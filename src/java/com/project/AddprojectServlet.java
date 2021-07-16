@@ -7,6 +7,8 @@ package com.project;
 
 import com.employee.employee;
 import com.employee.employeeDB;
+import com.notification.message;
+import com.notification.messageDB;
 import com.task.task;
 import com.task.taskDB;
 import java.io.IOException;
@@ -143,6 +145,20 @@ public class AddprojectServlet extends HttpServlet {
         Task.setRemarks(" ");
         
         String addTask = TaskDB.addTask(Task); 
+        
+        //Message
+        messageDB SMSdb = new messageDB();
+        message SMS = new message();
+
+        SMS.setTitle(TaskDB.getTaskName(Task.getType()));
+        SMS.setRemarks(Task.getRemarks());
+        SMS.setCreateDate(Task.getDueDate());
+        SMS.setEmpFrom(Employee.getId());
+        SMS.setEmpTo(4);
+        SMS.setType("Task");
+        SMS.setIsComplete(false);
+
+        String addSMS = SMSdb.addMessage(SMS);
         
         if(addTask.equals("SUCCESS") && addProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {

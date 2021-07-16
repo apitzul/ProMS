@@ -8,8 +8,6 @@ package com.task;
 import com.employee.employee;
 import com.notification.message;
 import com.notification.messageDB;
-import com.project.client;
-import com.project.clientDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
@@ -101,7 +99,7 @@ public class AddTaskServlet extends HttpServlet {
             task Task = new task();
             
             Task.setStartDate(java.time.LocalDate.now().toString());
-            Task.setDueDate(java.time.LocalDate.now().plusDays(5).toString());
+            Task.setDueDate(java.time.LocalDate.now().plusDays(2).toString());
             Task.setIsComplete(false);
             Task.setLateTask(false);
             Task.setProjectID(Integer.parseInt(proID));

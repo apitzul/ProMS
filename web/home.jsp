@@ -275,9 +275,10 @@ footer{
           <div style="overflow-y: auto;height: 250px">
         <table class="w3-table w3-striped w3-white">
                 <%
+                    messageDB SMSDB = new messageDB();
                  int j = 0;
                 while(j<messageList.size()){
-              
+                
                 message temp= (message) messageList.get(j);
                 System.out.print("Hi" + temp.toString());
                 if(temp.getType().equals("Task")){
@@ -285,13 +286,18 @@ footer{
                      <tr>
                         <td><i class="fa fa-bell w3-text-red w3-large"></i></td>
                         <td>New Task: <%=temp.getTitle()%></td>
-                        <td  style="color: red"><i>Due Date: <%=temp.getCreateDate()%></i></td>
+                        <%if(temp.isIsComplete()== false){%>
+                        <td  style="color: red"><i>Due Date: <%=temp.getCreateDate()%></i></td><%}
+                        else {%><td  style="color: green"><i>Done</i></td><%}%>
+                        <%temp.setIsComplete(true);
+                        SMSDB.updateMessage(temp);
+                        System.out.print(temp.isIsComplete());%>
                      </tr>
                     <%} else if(temp.getType().equals("Message")){
             %>
                      <tr>
                         <td><i class="fa fa-envelope w3-text-blue w3-large"></i></td>
-                        <td>New Message: <%=temp.getTitle()%></td>
+                        <td><b><%=temp.getTitle()%></b>: <%=temp.getRemarks()%></td>
                         <td  style="color: green"><i>Date: <%=temp.getCreateDate()%></i></td>
                      </tr>
                     <%}

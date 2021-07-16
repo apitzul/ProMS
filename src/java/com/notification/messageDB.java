@@ -50,6 +50,7 @@ public class messageDB {
         int empFrom = Message.getEmpFrom();
         int empTo = Message.getEmpTo();
         String Type = Message.getType();
+        boolean isComp = Message.isIsComplete();
        
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -103,6 +104,7 @@ public class messageDB {
                 String empFrom= resultSet.getString("empfrom");
                 String empTo= resultSet.getString("empto");
                 String type= resultSet.getString("type");
+                String isComp= resultSet.getString("iscomplete");
                
                 if(type.equals("Message")){
                     if(emp.getId() == (Integer.parseInt(empTo)))
@@ -114,6 +116,7 @@ public class messageDB {
                         Message.setCreateDate(createdate);
                         Message.setEmpFrom(Integer.parseInt(empFrom));
                         Message.setEmpTo(Integer.parseInt(empTo));
+                        Message.setIsComplete(Boolean.parseBoolean(isComp));
 
                         messageList.add(Message);
                         ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
@@ -129,6 +132,7 @@ public class messageDB {
                     Message.setCreateDate(createdate);
                     Message.setEmpFrom(Integer.parseInt(empFrom));
                     Message.setEmpTo(Integer.parseInt(empTo));
+                    Message.setIsComplete(Boolean.parseBoolean(isComp));
 
                     messageList.add(Message);
                     ////If the user entered values are already present in the database, which means user has already registered so return a SUCCESS message.
@@ -143,7 +147,37 @@ public class messageDB {
         
         return messageList;
     }
-    public void deleteMessage(){
+    public String updateMessage(message Message){
         
+        int messageId = Message.getId();
+        boolean IsComp = Message.isIsComplete();
+        
+        IsComp = true;
+        
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        
+        try
+         {
+            con = DBconnection.createConnection(); //Fetch database connection object
+            String query = "UPDATE MESSAGE SET ISCOMPLETE = ? WHERE ID = ?";
+            pstmt = con.prepareStatement(query);
+            
+            
+            pstmt.setBoolean(1, IsComp);
+            pstmt.setInt(2, messageId);
+            
+            int R = pstmt.executeUpdate();
+            if(R!=0) {
+                return "SUCCESS";
+            }
+            return "Invalid user credentials"; // Return appropriate message in case of failure
+        } catch (SQLException ex) {
+            Logger.getLogger(taskDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "Oops...";
     }
+    
+    
 }

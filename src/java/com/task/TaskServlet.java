@@ -98,6 +98,12 @@ public class TaskServlet extends HttpServlet {
         String proID = request.getParameter("proID");
         String DueDate = request.getParameter("DueDate");
         String DepID = request.getParameter("department");
+        int DepartmentID=0;
+        if(DepID.equals("Maintenance")){ DepartmentID = 1;}
+        else if(DepID.equals("Sales")){ DepartmentID = 2;}
+        else if(DepID.equals("Admin")){ DepartmentID = 3;}
+        else if(DepID.equals("Finance")){ DepartmentID = 4;}
+        
         LocalDate dueD = LocalDate.parse(DueDate); 
         
         
@@ -116,6 +122,7 @@ public class TaskServlet extends HttpServlet {
         LocalDate CompDate = null;
         LocalDate EstEndD = LocalDate.parse(Pro.getEstEndDate());
         
+        String addSMS = null;
         
         if(status.equals("Complete"))
         {
@@ -153,6 +160,21 @@ public class TaskServlet extends HttpServlet {
             }
             }
             
+            
+        if ((Integer.parseInt(TypeID) == 1)  || (Integer.parseInt(TypeID) == 4)){
+        //Message
+        messageDB SMSdb = new messageDB();
+        message SMS = new message();
+        
+        SMS.setTitle(TaskDB.getTaskName(Integer.parseInt(TypeID)+1));
+        SMS.setRemarks(Task.getRemarks());
+        SMS.setCreateDate(DueDate);
+        SMS.setEmpFrom(empID);
+        SMS.setEmpTo(DepartmentID);
+        SMS.setType("Task");
+        SMS.setIsComplete(false);
+        
+        addSMS = SMSdb.addMessage(SMS);}
         }
         
         //retrieve value file from form
@@ -191,20 +213,9 @@ public class TaskServlet extends HttpServlet {
         Pro.setLateProject(ProLate);
         String updateProject = ProDB.updateProject(Pro);
         
-        //Message
-        messageDB SMSdb = new messageDB();
-        message SMS = new message();
         
-        SMS.setTitle(TaskDB.getTaskName(Integer.parseInt(TypeID)));
-        SMS.setRemarks(Task.getRemarks());
-        SMS.setCreateDate(Task.getDueDate());
-        SMS.setEmpFrom(empID);
-        SMS.setEmpTo(Integer.parseInt(DepID));
-        SMS.setType("Task");
-        
-        String addSMS = SMSdb.addMessage(SMS);
         System.out.print(addSMS);
-    if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS") && addSMS.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
+    if(updateTask.equals("SUCCESS") && updateProject.equals("SUCCESS")) //If function returns success string then user will be rooted to Home page
             {
                 
                 request.getRequestDispatcher("/listTask.jsp").forward(request, response);//RequestDispatcher is used to send the control to the invoked page.

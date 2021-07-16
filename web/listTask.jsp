@@ -250,7 +250,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   %>
   <header class="w3-container" style="padding-top:22px">
       <h1><b>Task List</b></h1><br>
-      <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a>
+      <%if(Employee.getDepname().equals("Admin")){%>
+      <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Add New Task</a><%}%>
   </header>
     <div class="w3-container">
     <div class="w3-grey">

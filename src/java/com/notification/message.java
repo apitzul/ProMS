@@ -18,8 +18,17 @@ public class message implements java.io.Serializable{
     private String dueDate;
     private int empFrom;
     private int empTo;
+    private boolean isComplete;
 
     public message() {
+    }
+
+    public boolean isIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 
     public message(int id, String title, String type, String remarks, String createDate,String dueDate) {
