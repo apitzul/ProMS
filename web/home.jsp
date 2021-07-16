@@ -168,7 +168,7 @@ footer{
 <!-- Top container -->
 <div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <span class="w3-bar-item w3-right"> MKR Hartamas</span>
+  <img class=" w3-bar-item w3-right" src="Image/MKR-logo.png" alt="LogoCompany" width="45" height="55">
 </div>
 
 <!-- Sidebar/menu -->
@@ -269,8 +269,9 @@ footer{
   <div class="w3-panel">
     <div class="w3-row-padding" style="margin:0 -16px">
       <div class="w3-twothird">
+          <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Send Message</a>
+          <p></p>
           <h4><b>Feeds</b></h4>
-          <a class="open-button w3-bar-item w3-button w3-padding" onclick="openForm()">Send Message</a> 
           <div style="overflow-y: auto;height: 250px">
         <table class="w3-table w3-striped w3-white">
                 <%
@@ -314,7 +315,7 @@ footer{
         <span class="w3-xlarge">Imman Zuhairy Bin Ramlee</span><br>
       </li>
       <li class="w3-padding-16">
-        <img src="Image/charlie.jpg" class="w3-left w3-circle w3-margin-right" style="width:35px">
+        <img src="Image/aidil.jpeg" class="w3-left w3-circle w3-margin-right" style="width:35px">
         <span class="w3-xlarge">Ahmad Aidiel Firdaus Bin Ahmad Tarmizie</span><br>
       </li>
     </ul>
